@@ -67,26 +67,9 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="my-5">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-
-                        <!-- to get an API token!-->
-                        <!--<div class="post-preview">
-                                <h2 class="post-title">Bienvenidos a la Tienda Genérica</h2>
-                                <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
-                            <p class="post-meta">
-                                Creado por
-                                <a href="#!">Cristian Pérez</a>
-                                el 04 de Septiembre de 2021
-                            </p>
-                        </div>-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <form id="usersForm" data-sb-form-api-token="API_TOKEN">
                             <div class="form-floating">
-                                <input class="form-control" id="cedula" type="text" placeholder="Ingresa tu cedula..."
+                                <input class="form-control" id="id" type="text" placeholder="Ingresa tu cedula..."
                                     data-sb-validations="required" />
                                 <label for="name">Cédula</label>
                                 <div class="invalid-feedback" data-sb-feedback="cedula:required">Una Cedula es
@@ -95,7 +78,7 @@
                                     valida.</div>
                             </div>
                             <div class="form-floating">
-                                <input class="form-control" id="usuario" type="text" placeholder="Ingresa tu usuario..."
+                                <input class="form-control" id="user" type="text" placeholder="Ingresa tu usuario..."
                                     data-sb-validations="required,password" />
                                 <label for="usuario">Usuario</label>
                                 <div class="invalid-feedback" data-sb-feedback="usuario:required">Usuario requerido.
@@ -104,7 +87,7 @@
                                     valido.</div>
                             </div>
                             <div class="form-floating">
-                                <input class="form-control" id="nombreCompleto" type="text"
+                                <input class="form-control" id="name" type="text"
                                     placeholder="Ingresa tu Nombre Completo..."
                                     data-sb-validations="required,password" />
                                 <label for="nombreCompleto">Nombre Completo</label>
@@ -133,10 +116,6 @@
                                 </div>
                             </div>
                             <br />
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
                             <div class="d-none" id="submitSuccessMessage">
                                 <div class="text-center mb-3">
                                     <div class="fw-bolder">Form submission successful!</div>
@@ -153,22 +132,44 @@
                             <div class="d-none" id="submitErrorMessage">
                                 <div class="text-center text-danger mb-3">Error sending message!</div>
                             </div>
-                            <!-- Submit Button-->
-                            <div class="" style="display: flex; justify-content: space-evenly;">
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Consultar</button>
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Crear</button>
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Actualizar</button>
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Borrar</button>
-                            </div>
                         </form>
+                        <!-- Submit Button-->
+                        <div class="" style="display: flex; justify-content: space-evenly;">
+                            <button id="searchUser" class="btn btn-primary text-uppercase "
+                                id="submitButton">Consultar</button>
+                            <button id="createUser" class="btn btn-primary text-uppercase "
+                                id="submitButton">Crear</button>
+                            <button id="updateUser" class="btn btn-primary text-uppercase "
+                                id="submitButton">Actualizar</button>
+                            <button id="deleteUser" class="btn btn-primary text-uppercase "
+                                id="submitButton">Borrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <button id="modal-generated" type="button" style="display: none;" class="btn btn-primary" onclick='openModal()'>
+            Launch demo modal
+        </button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
+            role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title"></h5>
+                        <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div id="modal-message" class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
     </main>
     <!-- Footer-->
     <footer class="border-top">
@@ -207,6 +208,171 @@
             </div>
         </div>
     </footer>
+    <script>
+        function openModal() {
+            document.getElementById("backdrop").style.display = "block"
+            document.getElementById("exampleModal").style.display = "block"
+            document.getElementById("exampleModal").classList.add("show")
+        }
+        function closeModal() {
+            document.getElementById("backdrop").style.display = "none"
+            document.getElementById("exampleModal").style.display = "none"
+            document.getElementById("exampleModal").classList.remove("show")
+        }
+        var modal = document.getElementById('exampleModal');
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                closeModal()
+            }
+        }
+
+        deleteUser.onclick = async function () {
+            var id = document.getElementById("id");
+            await fetch(`http://localhost:8090/mintic/tiendagenerica/deleteuser/${id.value}`, {
+                method: 'DELETE',
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            })
+                .then(rsp => {
+                    var modalgenerated = document.getElementById("modal-generated");
+                    modalgenerated.click();
+                    var modaltitle = document.getElementById("modal-title");
+                    modaltitle.innerHTML = "Exito";
+                    var modaltext = document.getElementById("modal-message");
+                    modaltext.innerHTML = `Usuario eliminado con exito`;
+                }).catch((e) => {
+                    console.log(e)
+                    var modalgenerated = document.getElementById("modal-generated");
+                    modalgenerated.click();
+                    var modaltitle = document.getElementById("modal-title");
+                    modaltitle.innerHTML = "Error";
+                    var modaltext = document.getElementById("modal-message");
+                    modaltext.innerHTML = `No se pudo eliminar el usuario`;
+                }
+                );
+        }
+
+        updateUser.onclick = async function () {
+            var elements = document.getElementById("usersForm").elements;
+            var obj = {};
+            for (var i = 0; i < elements.length; i++) {
+                var item = elements.item(i);
+                obj[item.id] = item.value;
+            }
+            event.preventDefault();
+            //const formData = new URLSearchParams(new FormData(this));
+            fetch("http://localhost:8090/mintic/tiendagenerica/edituser",
+                {
+                    method: 'PUT',
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': 'http://localhost:8090',
+                        'Access-Control-Allow-Credentials': 'true'
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    redirect: 'follow', // manual, *follow, error
+                    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: JSON.stringify(obj)
+                })
+                .then(function (response) {
+                    return response.text()
+                }).then(function (text) {
+                    var modalgenerated = document.getElementById("modal-generated");
+                    modalgenerated.click();
+                    var modaltitle = document.getElementById("modal-title");
+                    modaltitle.innerHTML = "Exito";
+                    var modaltext = document.getElementById("modal-message");
+                    modaltext.innerHTML = `Usuario modificado con exito`;
+                }).catch((e) => {
+                    console.log(e)
+                    var modalgenerated = document.getElementById("modal-generated");
+                    modalgenerated.click();
+                    var modaltitle = document.getElementById("modal-title");
+                    modaltitle.innerHTML = "Error";
+                    var modaltext = document.getElementById("modal-message");
+                    modaltext.innerHTML = `No se pudo modificar el usuario`;
+                });
+        }
+
+        searchUser.onclick = async function () {
+            var id = document.getElementById("id");
+            var user = document.getElementById("user");
+            var name = document.getElementById("name");
+            var email = document.getElementById("email");
+            var modal = document.getElementById("myModal");
+            var data;
+            let count = 0;
+            await fetch(`http://localhost:8090/mintic/tiendagenerica/user/${id.value}`)
+                .then(response => response.json())
+                .then(rsp => {
+                    data = Object.values(rsp);
+                    user.value = data[4];
+                    name.value = data[1];
+                    email.value = data[3];
+                }).catch((e) => {
+                    console.log(e)
+                    var modalgenerated = document.getElementById("modal-generated");
+                    modalgenerated.click();
+                    var modaltitle = document.getElementById("modal-title");
+                    modaltitle.innerHTML = "Error";
+                    var modaltext = document.getElementById("modal-message");
+                    modaltext.innerHTML = `Usuario no encontrado`;
+                }
+                );
+        }
+
+        createUser.onclick = function () {
+            var elements = document.getElementById("usersForm").elements;
+            var obj = {};
+            for (var i = 0; i < elements.length; i++) {
+                var item = elements.item(i);
+                obj[item.id] = item.value;
+            }
+            event.preventDefault();
+            //const formData = new URLSearchParams(new FormData(this));
+            fetch("http://localhost:8090/mintic/tiendagenerica/saveuser",
+                {
+                    method: 'POST',
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    redirect: 'follow', // manual, *follow, error
+                    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    body: JSON.stringify(obj)
+                })
+                .then(function (response) {
+                    return response.text()
+                }).then(function (text) {
+                    var modalgenerated = document.getElementById("modal-generated");
+                    modalgenerated.click();
+                    var modaltitle = document.getElementById("modal-title");
+                    modaltitle.innerHTML = "Exito";
+                    var modaltext = document.getElementById("modal-message");
+                    modaltext.innerHTML = `Usuario guardado con exito`;
+                }).catch((e) => {
+                    console.log(e)
+                    var modalgenerated = document.getElementById("modal-generated");
+                    modalgenerated.click();
+                    var modaltitle = document.getElementById("modal-title");
+                    modaltitle.innerHTML = "Error";
+                    var modaltext = document.getElementById("modal-message");
+                    modaltext.innerHTML = `No se pudo crear el usuario`;
+                }
+                );
+        }
+
+    </script>
 </body>
 
 </html>
