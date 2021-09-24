@@ -2,4 +2,4 @@
 
 Projecto ciclo 3 mintic
 
-El proyecto actualmente tiene tecnologías Html y Css
+El proyecto actualmente tiene tecnologías Html y Css.....
