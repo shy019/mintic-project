@@ -55,8 +55,8 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="page-heading">
-                        <h1>MinticApp</h1>
-                        <span class="subheading">USUARIOS</span>
+                        <h1>USUARIOS</h1>
+                        <span class="subheading" id="title-page">Conectado como: </span>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                     <div class="my-5">
                         <form id="usersForm" data-sb-form-api-token="API_TOKEN">
                             <div class="form-floating">
-                                <input class="form-control" id="id" type="text" placeholder="Ingresa tu cedula..."
+                                <input class="form-control" id="cedula" type="text" placeholder="Ingresa tu cedula..."
                                     data-sb-validations="required" />
                                 <label for="name">Cédula</label>
                                 <div class="invalid-feedback" data-sb-feedback="cedula:required">Una Cedula es
@@ -78,8 +78,8 @@
                                     valida.</div>
                             </div>
                             <div class="form-floating">
-                                <input class="form-control" id="user" type="text" placeholder="Ingresa tu usuario..."
-                                    data-sb-validations="required,password" />
+                                <input class="form-control" id="username" type="text"
+                                    placeholder="Ingresa tu usuario..." data-sb-validations="required,password" />
                                 <label for="usuario">Usuario</label>
                                 <div class="invalid-feedback" data-sb-feedback="usuario:required">Usuario requerido.
                                 </div>
@@ -209,11 +209,22 @@
         </div>
     </footer>
     <script>
+
+        var userLoaded = localStorage.getItem("user");
+        var titulo = document.getElementById("title-page");
+        var tituloAnterior = titulo
+        let pass;
+        //Colocar Titulo
+        titulo.innerText = "Conectado como: " + JSON.parse(userLoaded)?.username;
+        rToken(JSON.parse(userLoaded));
+
+        //Abrir modal
         function openModal() {
             document.getElementById("backdrop").style.display = "block"
             document.getElementById("exampleModal").style.display = "block"
             document.getElementById("exampleModal").classList.add("show")
         }
+        //Cerrar modal
         function closeModal() {
             document.getElementById("backdrop").style.display = "none"
             document.getElementById("exampleModal").style.display = "none"
@@ -227,25 +238,39 @@
             }
         }
 
+        //Borrar usuario
         deleteUser.onclick = async function () {
-            var id = document.getElementById("id");
-            await fetch(`http://localhost:8090/mintic/tiendagenerica/deleteuser/${id.value}`, {
-                method: 'DELETE',
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin', // include, *same-origin, omit
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            })
-                .then(rsp => {
-                    var modalgenerated = document.getElementById("modal-generated");
-                    modalgenerated.click();
-                    var modaltitle = document.getElementById("modal-title");
-                    modaltitle.innerHTML = "Exito";
-                    var modaltext = document.getElementById("modal-message");
-                    modaltext.innerHTML = `Usuario eliminado con exito`;
+            var id = document.getElementById("cedula");
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch(`http://localhost:8090/mintic/tiendagenerica/api/user/deleteuser/${id.value}`, {
+                    method: 'DELETE',
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': 'http://localhost:8090',
+                        'Access-Control-Allow-Credentials': 'true',
+                        'authorization': `Bearer ${token.accessToken}`
+                        //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                        //'Authorization': 
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    redirect: 'follow', // manual, *follow, error
+                    referrerPolicy: 'no-referrer'
+                }).then(rsp => {
+                    console.log(JSON.parse(rsp))
+                    if (JSON.parse(rsp).message) {
+                        throw rsp;
+                    } else {
+                        var modalgenerated = document.getElementById("modal-generated");
+                        modalgenerated.click();
+                        var modaltitle = document.getElementById("modal-title");
+                        modaltitle.innerHTML = "Exito";
+                        var modaltext = document.getElementById("modal-message");
+                        modaltext.innerHTML = `Usuario eliminado con exito`;
+                    }
                 }).catch((e) => {
-                    console.log(e)
                     var modalgenerated = document.getElementById("modal-generated");
                     modalgenerated.click();
                     var modaltitle = document.getElementById("modal-title");
@@ -254,8 +279,14 @@
                     modaltext.innerHTML = `No se pudo eliminar el usuario`;
                 }
                 );
+            }).catch((e) => {
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `${e.message}`;
+            });
         }
 
+        //Actualizar usuario
         updateUser.onclick = async function () {
             var elements = document.getElementById("usersForm").elements;
             var obj = {};
@@ -265,111 +296,245 @@
             }
             event.preventDefault();
             //const formData = new URLSearchParams(new FormData(this));
-            fetch("http://localhost:8090/mintic/tiendagenerica/edituser",
-                {
-                    method: 'PUT',
-                    mode: 'cors', // no-cors, *cors, same-origin
-                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                    credentials: 'same-origin', // include, *same-origin, omit
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': 'http://localhost:8090',
-                        'Access-Control-Allow-Credentials': 'true'
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    redirect: 'follow', // manual, *follow, error
-                    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    body: JSON.stringify(obj)
-                })
-                .then(function (response) {
-                    return response.text()
-                }).then(function (text) {
-                    var modalgenerated = document.getElementById("modal-generated");
-                    modalgenerated.click();
-                    var modaltitle = document.getElementById("modal-title");
-                    modaltitle.innerHTML = "Exito";
-                    var modaltext = document.getElementById("modal-message");
-                    modaltext.innerHTML = `Usuario modificado con exito`;
+            var flag = true;
+            Object.values(obj).forEach(x => {
+                x.length == 0 ? flag = false : flag = true;
+            })
+            if (flag) {
+                await rToken(JSON.parse(userLoaded)).then((token) => {
+                    fetch("http://localhost:8090/mintic/tiendagenerica/api/user/edituser",
+                        {
+                            method: 'PUT',
+                            mode: 'cors', // no-cors, *cors, same-origin
+                            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                            credentials: 'same-origin', // include, *same-origin, omit
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': 'http://localhost:8090',
+                                'Access-Control-Allow-Credentials': 'true',
+                                'authorization': `Bearer ${token.accessToken}`
+                                //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                                //'Authorization': 
+                                // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            redirect: 'follow', // manual, *follow, error
+                            referrerPolicy: 'no-referrer',
+                            body: JSON.stringify(obj)
+                        })
+                        .then(function (response) {
+                            return response.text()
+                        }).then(function (text) {
+                            if (JSON.parse(text).message == 'Usuario modificado con exito') {
+                                var modalgenerated = document.getElementById("modal-generated");
+                                modalgenerated.click();
+                                var modaltitle = document.getElementById("modal-title");
+                                modaltitle.innerHTML = "Exito";
+                                var modaltext = document.getElementById("modal-message");
+                                modaltext.innerHTML = `Usuario modificado con exito`;
+                            } else {
+                                throw JSON.parse(text);
+                            }
+                        }).catch((e) => {
+                            var modalgenerated = document.getElementById("modal-generated");
+                            modalgenerated.click();
+                            var modaltitle = document.getElementById("modal-title");
+                            modaltitle.innerHTML = "Error";
+                            var modaltext = document.getElementById("modal-message");
+                            modaltext.innerHTML = `No se pudo modificar el usuario: </br> ${e.message}`;
+                        })
                 }).catch((e) => {
-                    console.log(e)
-                    var modalgenerated = document.getElementById("modal-generated");
                     modalgenerated.click();
-                    var modaltitle = document.getElementById("modal-title");
                     modaltitle.innerHTML = "Error";
-                    var modaltext = document.getElementById("modal-message");
-                    modaltext.innerHTML = `No se pudo modificar el usuario`;
+                    modaltext.innerHTML = `${e.message}`;
                 });
+            } else {
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `Hay campos sin rellenar`;
+            }
         }
 
+
+        //Buscar usuario
         searchUser.onclick = async function () {
-            var id = document.getElementById("id");
-            var user = document.getElementById("user");
+            var id = document.getElementById("cedula");
+            var user = document.getElementById("username");
             var name = document.getElementById("name");
             var email = document.getElementById("email");
             var modal = document.getElementById("myModal");
+            var modalgenerated = document.getElementById("modal-generated");
+            var modaltitle = document.getElementById("modal-title");
+            var modaltext = document.getElementById("modal-message");
             var data;
             let count = 0;
-            await fetch(`http://localhost:8090/mintic/tiendagenerica/user/${id.value}`)
-                .then(response => response.json())
-                .then(rsp => {
-                    data = Object.values(rsp);
-                    user.value = data[4];
-                    name.value = data[1];
-                    email.value = data[3];
+            if (id.value.length > 0) {
+                await rToken(JSON.parse(userLoaded)).then((token) => {
+                    fetch(`http://localhost:8090/mintic/tiendagenerica/api/user/${id.value}`,
+                        {
+                            type: 'GET',
+                            mode: 'cors', // no-cors, *cors, same-origin
+                            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                            credentials: 'same-origin', // include, *same-origin, omit
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': 'http://localhost:8090',
+                                'Access-Control-Allow-Credentials': 'true',
+                                'authorization': `Bearer ${token.accessToken}`
+                                //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                                //'Authorization': 
+                                // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            redirect: 'follow', // manual, *follow, error
+                            referrerPolicy: 'no-referrer',
+                        })
+                        .then(response => response.json())
+                        .then(rsp => {
+                            if (rsp) {
+                                if (rsp.hasOwnProperty('name')) {
+                                    data = Object.values(rsp);
+                                    user.value = data[5];
+                                    name.value = data[0];
+                                    email.value = data[1];
+                                    pass = data
+                                } else {
+                                    modalgenerated.click();
+                                    modaltitle.innerHTML = "Error";
+                                    modaltext.innerHTML = `${data[1]}`;
+                                }
+                            } else {
+                                throw 'Usuario no encontrado';
+                            }
+                        }).catch((e) => {
+                            user.value = '';
+                            name.value = '';
+                            email.value = '';
+                            modalgenerated.click();
+                            modaltitle.innerHTML = "Error";
+                            modaltext.innerHTML = `Usuario no encontrado`;
+                        }
+                        )
                 }).catch((e) => {
-                    console.log(e)
-                    var modalgenerated = document.getElementById("modal-generated");
                     modalgenerated.click();
-                    var modaltitle = document.getElementById("modal-title");
                     modaltitle.innerHTML = "Error";
-                    var modaltext = document.getElementById("modal-message");
-                    modaltext.innerHTML = `Usuario no encontrado`;
-                }
-                );
+                    modaltext.innerHTML = `${e.message}`;
+                });
+            } else {
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `Ingrese una cedula valida`;
+            }
         }
 
-        createUser.onclick = function () {
+        //Crear usuario
+        createUser.onclick = async function () {
             var elements = document.getElementById("usersForm").elements;
-            var obj = {};
+            var obj = { "role": ["user", "admin", "mod"] };
             for (var i = 0; i < elements.length; i++) {
                 var item = elements.item(i);
                 obj[item.id] = item.value;
             }
             event.preventDefault();
             //const formData = new URLSearchParams(new FormData(this));
-            fetch("http://localhost:8090/mintic/tiendagenerica/saveuser",
-                {
-                    method: 'POST',
-                    mode: 'cors', // no-cors, *cors, same-origin
-                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                    credentials: 'same-origin', // include, *same-origin, omit
-                    headers: {
-                        'Content-Type': 'application/json'
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    redirect: 'follow', // manual, *follow, error
-                    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                    body: JSON.stringify(obj)
-                })
-                .then(function (response) {
-                    return response.text()
-                }).then(function (text) {
-                    var modalgenerated = document.getElementById("modal-generated");
-                    modalgenerated.click();
-                    var modaltitle = document.getElementById("modal-title");
-                    modaltitle.innerHTML = "Exito";
-                    var modaltext = document.getElementById("modal-message");
-                    modaltext.innerHTML = `Usuario guardado con exito`;
+            var flag = true;
+            Object.values(obj).forEach(x => {
+                x.length == 0 ? flag = false : flag = true;
+            })
+            if (flag) {
+                await rToken(JSON.parse(userLoaded)).then((token) => {
+                    fetch("http://localhost:8090/api/auth/signup",
+                        {
+                            method: 'POST',
+                            mode: 'cors', // no-cors, *cors, same-origin
+                            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                            credentials: 'same-origin', // include, *same-origin, omit
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': 'http://localhost:8090',
+                                'Access-Control-Allow-Credentials': 'true',
+                                'authorization': `Bearer ${token.accessToken}`
+                                //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                                //'Authorization': 
+                                // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            redirect: 'follow', // manual, *follow, error
+                            referrerPolicy: 'no-referrer',
+                            body: JSON.stringify(obj)
+                        })
+                        .then(function (response) {
+                            return response.text()
+                        }).then(function (text) {
+                            if (text && JSON.parse(text).hasOwnProperty('message')) {
+                                var modalgenerated = document.getElementById("modal-generated");
+                                modalgenerated.click();
+                                var modaltitle = document.getElementById("modal-title");
+                                modaltitle.innerHTML = "Exito";
+                                var modaltext = document.getElementById("modal-message");
+                                modaltext.innerHTML = `Usuario guardado con exito`;
+                            } else {
+                                throw text;
+                            }
+                        }).catch((e) => {
+                            var modalgenerated = document.getElementById("modal-generated");
+                            modalgenerated.click();
+                            var modaltitle = document.getElementById("modal-title");
+                            modaltitle.innerHTML = "Error";
+                            var modaltext = document.getElementById("modal-message");
+                            let err = "";
+                            JSON.parse(e).errors.forEach(element => {
+                                err += element.field + " " + element.defaultMessage + "<br/> "
+                            })
+                            modaltext.innerHTML = `No se pudo crear el usuario: <br/> ${err}`;
+                        }
+                        );
                 }).catch((e) => {
-                    console.log(e)
-                    var modalgenerated = document.getElementById("modal-generated");
                     modalgenerated.click();
-                    var modaltitle = document.getElementById("modal-title");
                     modaltitle.innerHTML = "Error";
-                    var modaltext = document.getElementById("modal-message");
-                    modaltext.innerHTML = `No se pudo crear el usuario`;
+                    modaltext.innerHTML = `${e.message}`;
+                });
+            } else {
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `Hay datos sin llenar`;
+            }
+        }
+
+        function rToken(token) {
+            return new Promise((resolve, reject) => {
+                obj = {
+                    "refreshToken": token.refreshToken
                 }
-                );
+                fetch("http://localhost:8090/api/auth/refreshtoken",
+                    {
+                        method: 'POST',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                        body: JSON.stringify(obj)
+                    })
+                    .then(function (response) {
+                        return response.text();
+                    }).then(function (text) {
+                        if (JSON.parse(text).hasOwnProperty('accessToken')) {
+                            resolve(JSON.parse(text));
+                        } else {
+                            reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                        }
+                    }).catch((e) => {
+                        reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                    }
+                    );
+            });
         }
 
     </script>

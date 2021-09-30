@@ -18,6 +18,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
         rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -40,19 +41,6 @@
                     Menú
                     <i class="fas fa-bars"></i>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="usuarios.html">Usuarios</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="clientes.html">Clientes</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                href="proveedores.html">Proveedores</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="ventas.html">Ventas</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="reportes.html">Reportes</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </nav>
         <!-- Page Header-->
@@ -131,16 +119,39 @@
                                 </div>
                                 <!-- Submit Button-->
                                 <div class="" style="display: flex; justify-content: space-evenly;">
-                                    <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                        type="submit">Aceptar</button>
-                                    <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                        type="submit">Cancelar</button>
+                                    <button class="btn btn-primary text-uppercase" id="submitButton" type="button"
+                                        onclick="continuar()">Aceptar</button>
+                                    <button class="btn btn-primary text-uppercase" id="cancelButton" type="button"
+                                        onclick="cancelar()">Cancelar</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+            <button id="modal-generated" type="button" style="display: none;" class="btn btn-primary"
+                onclick='openModal()'>
+                Launch demo modal
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-modal="true" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-title"></h5>
+                            <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div id="modal-message" class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
         </main>
         <!-- Footer-->
         <footer class="border-top">
@@ -179,6 +190,77 @@
                 </div>
             </div>
         </footer>
+        <script>
+
+
+            let userName = document.getElementById("name");
+            let password = document.getElementById("password");
+            var modalgenerated = document.getElementById("modal-generated");
+            var modaltitle = document.getElementById("modal-title");
+            var modaltext = document.getElementById("modal-message");
+
+            function openModal() {
+                document.getElementById("backdrop").style.display = "block"
+                document.getElementById("exampleModal").style.display = "block"
+                document.getElementById("exampleModal").classList.add("show")
+            }
+            function closeModal() {
+                document.getElementById("backdrop").style.display = "none"
+                document.getElementById("exampleModal").style.display = "none"
+                document.getElementById("exampleModal").classList.remove("show")
+            }
+            var modal = document.getElementById('exampleModal');
+
+            async function continuar() {
+                if (userName.value !== null && password.value !== null) {
+                    var obj = {};
+                    obj["username"] = userName.value;
+                    obj["password"] = password.value;
+                    await fetch('http://localhost:8090/api/auth/signin',
+                        {
+                            method: 'POST',
+                            mode: 'cors', // no-cors, *cors, same-origin
+                            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                            credentials: 'same-origin', // include, *same-origin, omit
+                            headers: {
+                                'Content-Type': 'application/json'
+                                // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            redirect: 'follow', // manual, *follow, error
+                            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                            body: JSON.stringify(obj)
+                        })
+                        .then(function (response) {
+                            return response.json();
+                        }).then(function (text) {
+                            if (text.status == 401 || text.status == 404 || text.status == 400 || text.status == 403) {
+                                throw text.message;
+                            }
+
+                            localStorage.setItem("user", JSON.stringify(text));
+                            //var usuarioAlmacenado = localStorage.getItem("user");
+                            window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Usuarios.html";
+                        }).catch((error) => {
+                            modalgenerated.click();
+                            modaltitle.innerHTML = "Error";
+                            modaltext.innerHTML = `${error}`;
+                        })
+                } else {
+                    modalgenerated.click();
+                    modaltitle.innerHTML = "Error";
+                    if (password.value !== null) {
+                        modaltext.innerHTML = `Ingrese una contraseña`;
+                    } else {
+                        modaltext.innerHTML = `Ingrese un usuario`;
+                    }
+                }
+            }
+
+            function cancelar() {
+                userName.value = '';
+                password.value = '';
+            }
+        </script>
     </body>
 
 </html>
