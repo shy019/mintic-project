@@ -31,7 +31,8 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="Inicio.html">Tienda Genérica</a>
+            <a class="navbar-brand" href="Principal.html">Inicio</a>
+            <a class="navbar-brand" href="#" onclick="logOut()">Salir</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menú
@@ -39,12 +40,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Usuarios.html">Usuarios</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Clientes.html">Clientes</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                    <li id="linkUsuarios" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Usuarios.html">Usuarios</a></li>
+                    <li id="linkClientes" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Clientes.html">Clientes</a></li>
+                    <li id="linkProveedores" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="proveedores.html">Proveedores</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Ventas.html">Ventas</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Reportes.html">Reportes</a></li>
+                    <li id="linkProductos" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Productos.html">Productos</a></li>
+                    <li id="linkVentas" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Ventas.html">Ventas</a></li>
+                    <li id="linkReportes" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Reportes.html">Reportes</a></li>
                 </ul>
             </div>
         </div>
@@ -55,8 +62,8 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="page-heading">
-                        <h1>MinticApp</h1>
-                        <span class="subheading">Reporte Usuarios</span>
+                        <h1>REPORTE USUARIOS</h1>
+                        <span class="subheading" id="title-page">Reporte Usuarios</span>
                     </div>
                 </div>
             </div>
@@ -124,7 +131,161 @@
             </div>
         </div>
     </footer>
-    <script src="../js/ReporteUsuarios.js"></script>
+    <script>
+
+        let table = document.getElementById("table");
+        var userLoaded = localStorage.getItem("user");
+        loadUsers();
+        funcionarMenu(userLoaded);
+
+        var titulo = document.getElementById("title-page");
+        var tituloAnterior = titulo
+        let pass;
+        //Colocar Titulo
+        titulo.innerText = "Conectado como: " + JSON.parse(userLoaded)?.username;
+        rToken(JSON.parse(userLoaded));
+
+        function funcionarMenu(userLoaded) {
+            var linkUsuarios = document.getElementById("linkUsuarios");
+            var linkClientes = document.getElementById("linkClientes");
+            var linkProveedores = document.getElementById("linkProveedores");
+            var linkVentas = document.getElementById("linkVentas");
+            var linkReportes = document.getElementById("linkReportes");
+            let role = 0;
+            for (let index = 0; index < JSON.parse(userLoaded)?.roles.length; index++) {
+                if (JSON.parse(userLoaded)?.roles[index] == "ROLE_USER") {
+                    role += 1;
+                } else if (JSON.parse(userLoaded)?.roles[index] == "ROLE_MODERATOR") {
+                    role += 2;
+                } else if (JSON.parse(userLoaded)?.roles[index] == "ROLE_ADMIN") {
+                    role += 4;
+                }
+            }
+            if (role == 3 || role == 2) {
+                linkUsuarios.style = "display: none;";
+                linkClientes.style = "display: block;";
+                linkProveedores.style = "display: block;";
+            } else if (role == 1) {
+                linkUsuarios.style = "display: none;";
+                linkClientes.style = "display: none;";
+                linkProveedores.style = "display: none;";
+            }
+        }
+
+        function loadTable(data, table) {
+            let contador = 0;
+            if (!document.getElementsByTagName) return;
+            for (let element of data) {
+                contador++;
+                let obj = {
+                    id: contador,
+                    cedula: element.id,
+                    nombre: element.name,
+                    correo: element.email,
+                    usuario: element.user,
+                    password: element.password
+                }
+                let row = table.insertRow();
+                for (key in obj) {
+                    let text = "";
+                    let cell = row.insertCell();
+                    text = document.createTextNode(obj[key] == null ? "" : key == "password" ? coverPassword(obj[key].length) : obj[key]);
+                    cell.appendChild(text);
+                }
+            }
+        }
+
+        function coverPassword(number) {
+            let text = "";
+            number = 6;
+            while (number > 0) {
+                text += "*";
+                number--;
+            }
+            return text;
+        }
+
+        //Buscar usuarios
+        async function loadUsers() {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch(`http://localhost:8090/mintic/tiendagenerica/api/user/all`,
+                    {
+                        type: 'GET',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                    })
+                    .then(response => response.json())
+                    .then(rsp => { loadTable(rsp, table) }).catch((e) => {
+                        console.log(e)
+                    }
+                    )
+            }).catch((e) => {
+                console.log(e)
+            });
+        }
+
+        function rToken(token) {
+            return new Promise((resolve, reject) => {
+                try {
+                    obj = {
+                        "refreshToken": token.refreshToken
+                    }
+                    fetch("http://localhost:8090/api/auth/refreshtoken",
+                        {
+                            method: 'POST',
+                            mode: 'cors', // no-cors, *cors, same-origin
+                            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                            credentials: 'same-origin', // include, *same-origin, omit
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': 'http://localhost:8090',
+                                'Access-Control-Allow-Credentials': 'true',
+                                'authorization': `Bearer ${token.accessToken}`
+                                //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                                //'Authorization': 
+                                // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            redirect: 'follow', // manual, *follow, error
+                            referrerPolicy: 'no-referrer',
+                            body: JSON.stringify(obj)
+                        })
+                        .then(function (response) {
+                            return response.text();
+                        }).then(function (text) {
+                            if (JSON.parse(text).hasOwnProperty('accessToken')) {
+                                resolve(JSON.parse(text));
+                            } else {
+                                reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                            }
+                        }).catch((e) => {
+                            reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                        }
+                        );
+                } catch {
+                    reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                }
+            });
+        }
+
+        function logOut() {
+            sessionStorage.removeItem("user");
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html";
+        }
+    </script>
 </body>
 
 </html>
