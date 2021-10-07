@@ -31,7 +31,8 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="Inicio.html">Tienda Genérica</a>
+            <a class="navbar-brand" href="Principal.html">Inicio</a>
+            <a class="navbar-brand" href="#" onclick="logOut()">Salir</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menú
@@ -39,12 +40,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Usuarios.html">Usuarios</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Clientes.html">Clientes</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                    <li id="linkUsuarios" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Usuarios.html">Usuarios</a></li>
+                    <li id="linkClientes" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Clientes.html">Clientes</a></li>
+                    <li id="linkProveedores" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="proveedores.html">Proveedores</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Ventas.html">Ventas</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Reportes.html">Reportes</a></li>
+                    <li id="linkProductos" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Productos.html">Productos</a></li>
+                    <li id="linkVentas" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Ventas.html">Ventas</a></li>
+                    <li id="linkReportes" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Reportes.html">Reportes</a></li>
                 </ul>
             </div>
         </div>
@@ -55,8 +62,8 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="page-heading">
-                        <h1>MinticApp</h1>
-                        <span class="subheading">Clientes</span>
+                        <h1>CLIENTES</h1>
+                        <span class="subheading" id="title-page">Clientes</span>
                     </div>
                 </div>
             </div>
@@ -84,53 +91,60 @@
                                 el 04 de Septiembre de 2021
                             </p>
                         </div>-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <form id="clientForm" data-sb-form-api-token="API_TOKEN">
 
                             <div class="form-floating">
-                                <input class="form-control" id="cedula" type="text" placeholder="Ingresa tu cedula..."
-                                    data-sb-validations="required" />
+                                <input class="form-control" id="cedulaClientes" type="text"
+                                    placeholder="Ingresa tu cedulaClientes..." data-sb-validations="required" />
                                 <label for="name">Cédula</label>
-                                <div class="invalid-feedback" data-sb-feedback="cedula:required">Una Cedula es
+                                <div class="invalid-feedback" data-sb-feedback="cedulaClientes:required">Una Cedula es
                                     requerida.</div>
-                                <div class="invalid-feedback" data-sb-feedback="cedula:password">No es una Cedula
+                                <div class="invalid-feedback" data-sb-feedback="cedulaClientes:password">No es una
+                                    Cedula
                                     valida.</div>
                             </div>
                             <div class="form-floating">
-                                <input class="form-control" id="telefono" type="text"
+                                <input class="form-control" id="telefonoCliente" type="text"
                                     placeholder="Ingresa tu Teléfono..." data-sb-validations="required,password" />
-                                <label for="telefono">Teléfono</label>
-                                <div class="invalid-feedback" data-sb-feedback="telefono:required">Teléfono requerido.
+                                <label for="telefonoCliente">Teléfono</label>
+                                <div class="invalid-feedback" data-sb-feedback="telefonoCliente:required">Teléfono
+                                    requerido.
                                 </div>
-                                <div class="invalid-feedback" data-sb-feedback="telefono:password">No es un teléfono
+                                <div class="invalid-feedback" data-sb-feedback="telefonoCliente:password">No es un
+                                    teléfono
                                     valido.</div>
                             </div>
                             <div class="form-floating">
-                                <input class="form-control" id="nombreCompleto" type="text"
+                                <input class="form-control" id="nombreCliente" type="text"
                                     placeholder="Ingresa tu Nombre Completo..."
                                     data-sb-validations="required,password" />
-                                <label for="nombreCompleto">Nombre Completo</label>
-                                <div class="invalid-feedback" data-sb-feedback="nombreCompleto:required">Un Nombre es
+                                <label for="nombreCliente">Nombre Completo</label>
+                                <div class="invalid-feedback" data-sb-feedback="nombreCliente:required">Un Nombre es
                                     requerido.</div>
-                                <div class="invalid-feedback" data-sb-feedback="nombreCompleto:password">No es un Nombre
+                                <div class="invalid-feedback" data-sb-feedback="nombreCliente:password">No es un Nombre
                                     valido.</div>
                             </div>
                             <div class="form-floating">
-                                <input class="form-control" id="email" type="email"
+                                <input class="form-control" id="emailCliente" type="emailCliente"
                                     placeholder="Ingresa tu Correo Electrónico..."
                                     data-sb-validations="required,password" />
-                                <label for="email">Correo Electrónico</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">Un email es requerido.
+                                <label for="emailCliente">Correo Electrónico</label>
+                                <div class="invalid-feedback" data-sb-feedback="emailCliente:required">Un emailCliente
+                                    es requerido.
                                 </div>
-                                <div class="invalid-feedback" data-sb-feedback="email:password">No es un email valido.
+                                <div class="invalid-feedback" data-sb-feedback="emailCliente:password">No es un
+                                    emailCliente valido.
                                 </div>
                             </div>
                             <div class="form-floating">
-                                <input class="form-control" id="address" type="text"
+                                <input class="form-control" id="direccionCliente" type="text"
                                     placeholder="Ingresa tu Dirección..." data-sb-validations="required,password" />
-                                <label for="address">Dirección</label>
-                                <div class="invalid-feedback" data-sb-feedback="address:required">Dirección requerida.
+                                <label for="direccionCliente">Dirección</label>
+                                <div class="invalid-feedback" data-sb-feedback="direccionCliente:required">Dirección
+                                    requerida.
                                 </div>
-                                <div class="invalid-feedback" data-sb-feedback="address:password">No es una Dirección
+                                <div class="invalid-feedback" data-sb-feedback="direccionCliente:password">No es una
+                                    Dirección
                                     valida.</div>
                             </div>
                             <br />
@@ -155,21 +169,43 @@
                                 <div class="text-center text-danger mb-3">Error sending message!</div>
                             </div>
                             <!-- Submit Button-->
-                            <div class="" style="display: flex; justify-content: space-evenly;">
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Consultar</button>
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Crear</button>
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Actualizar</button>
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Borrar</button>
-                            </div>
                         </form>
+                        <div class="" style="display: flex; justify-content: space-evenly;">
+                            <button id="searchUser" class="btn btn-primary text-uppercase "
+                                id="submitButton">Consultar</button>
+                            <button id="createUser" class="btn btn-primary text-uppercase "
+                                id="submitButton">Crear</button>
+                            <button id="updateUser" class="btn btn-primary text-uppercase "
+                                id="submitButton">Actualizar</button>
+                            <button id="deleteUser" class="btn btn-primary text-uppercase "
+                                id="submitButton">Borrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <button id="modal-generated" type="button" style="display: none;" class="btn btn-primary" onclick='openModal()'>
+            Launch demo modal
+        </button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
+            role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title"></h5>
+                        <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div id="modal-message" class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
     </main>
     <!-- Footer-->
     <footer class="border-top">
@@ -209,5 +245,371 @@
         </div>
     </footer>
 </body>
+<script>
+    var userLoaded = localStorage.getItem("user");
+    funcionarMenu(userLoaded);
+
+    function funcionarMenu(userLoaded) {
+        var linkUsuarios = document.getElementById("linkUsuarios");
+        var linkClientes = document.getElementById("linkClientes");
+        var linkProveedores = document.getElementById("linkProveedores");
+        var linkVentas = document.getElementById("linkVentas");
+        var linkReportes = document.getElementById("linkReportes");
+        let role = 0;
+        for (let index = 0; index < JSON.parse(userLoaded)?.roles.length; index++) {
+            if (JSON.parse(userLoaded)?.roles[index] == "ROLE_USER") {
+                role += 1;
+            } else if (JSON.parse(userLoaded)?.roles[index] == "ROLE_MODERATOR") {
+                role += 2;
+            } else if (JSON.parse(userLoaded)?.roles[index] == "ROLE_ADMIN") {
+                role += 4;
+            }
+        }
+        if (role == 3 || role == 2) {
+            linkUsuarios.style = "display: none;";
+            linkClientes.style = "display: block;";
+            linkProveedores.style = "display: block;";
+        } else if (role == 1) {
+            linkUsuarios.style = "display: none;";
+            linkClientes.style = "display: none;";
+            linkProveedores.style = "display: none;";
+        }
+    }
+
+
+    var titulo = document.getElementById("title-page");
+    var tituloAnterior = titulo
+    let pass;
+    //Colocar Titulo
+    titulo.innerText = "Conectado como: " + JSON.parse(userLoaded)?.username;
+    rToken(JSON.parse(userLoaded));
+
+    //Abrir modal
+    function openModal() {
+        document.getElementById("backdrop").style.display = "block"
+        document.getElementById("exampleModal").style.display = "block"
+        document.getElementById("exampleModal").classList.add("show")
+    }
+    //Cerrar modal
+    function closeModal() {
+        document.getElementById("backdrop").style.display = "none"
+        document.getElementById("exampleModal").style.display = "none"
+        document.getElementById("exampleModal").classList.remove("show")
+    }
+    var modal = document.getElementById('exampleModal');
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            closeModal()
+        }
+    }
+
+    //Borrar cliente
+    deleteUser.onclick = async function () {
+        var id = document.getElementById("cedulaClientes");
+        await rToken(JSON.parse(userLoaded)).then((token) => {
+            fetch(`http://localhost:8090/mintic/tiendagenerica/api/client/deleteclient/${id.value}`, {
+                method: 'DELETE',
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://localhost:8090',
+                    'Access-Control-Allow-Credentials': 'true',
+                    'authorization': `Bearer ${token.accessToken}`
+                    //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                    //'Authorization': 
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer'
+            }).then(rsp => {
+                var modalgenerated = document.getElementById("modal-generated");
+                modalgenerated.click();
+                var modaltitle = document.getElementById("modal-title");
+                modaltitle.innerHTML = "Exito";
+                var modaltext = document.getElementById("modal-message");
+                modaltext.innerHTML = `Cliente eliminado con exito`;
+            }).catch((e) => {
+                var modalgenerated = document.getElementById("modal-generated");
+                modalgenerated.click();
+                var modaltitle = document.getElementById("modal-title");
+                modaltitle.innerHTML = "Error";
+                var modaltext = document.getElementById("modal-message");
+                modaltext.innerHTML = `No se pudo eliminar el cliente`;
+            }
+            );
+        }).catch((e) => {
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `${e.message}`;
+        });
+    }
+
+    //Actualizar cliente
+    updateUser.onclick = async function () {
+        var elements = document.getElementById("clientForm").elements;
+        var obj = {};
+        for (var i = 0; i < elements.length; i++) {
+            var item = elements.item(i);
+            obj[item.id] = item.value;
+        }
+        event.preventDefault();
+        //const formData = new URLSearchParams(new FormData(this));
+        var flag = true;
+        Object.values(obj).forEach(x => {
+            x.length == 0 ? flag = false : flag = true;
+        })
+        if (flag) {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch("http://localhost:8090/mintic/tiendagenerica/api/client/editclient",
+                    {
+                        method: 'PUT',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                        body: JSON.stringify(obj)
+                    })
+                    .then(function (response) {
+                        return response.text()
+                    }).then(function (text) {
+                        if (JSON.parse(text).message == 'Cliente modificado con exito') {
+                            var modalgenerated = document.getElementById("modal-generated");
+                            modalgenerated.click();
+                            var modaltitle = document.getElementById("modal-title");
+                            modaltitle.innerHTML = "Exito";
+                            var modaltext = document.getElementById("modal-message");
+                            modaltext.innerHTML = `Cliente modificado con exito`;
+                        } else {
+                            throw JSON.parse(text);
+                        }
+                    }).catch((e) => {
+                        var modalgenerated = document.getElementById("modal-generated");
+                        modalgenerated.click();
+                        var modaltitle = document.getElementById("modal-title");
+                        modaltitle.innerHTML = "Error";
+                        var modaltext = document.getElementById("modal-message");
+                        modaltext.innerHTML = `No se pudo modificar el cliente: </br> ${e.message}`;
+                    })
+            }).catch((e) => {
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `${e.message}`;
+            });
+        } else {
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `Hay campos sin rellenar`;
+        }
+    }
+
+
+    //Buscar cliente
+    searchUser.onclick = async function () {
+        var id = document.getElementById("cedulaClientes");
+        var telefonoCliente = document.getElementById("telefonoCliente");
+        var nombreCliente = document.getElementById("nombreCliente");
+        var emailCliente = document.getElementById("emailCliente");
+        var direccionCliente = document.getElementById("direccionCliente");
+        var modal = document.getElementById("myModal");
+        var modalgenerated = document.getElementById("modal-generated");
+        var modaltitle = document.getElementById("modal-title");
+        var modaltext = document.getElementById("modal-message");
+        var data;
+        let count = 0;
+        if (id.value.length > 0) {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch(`http://localhost:8090/mintic/tiendagenerica/api/client/${id.value}`,
+                    {
+                        type: 'GET',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                    })
+                    .then(response => response.json())
+                    .then(rsp => {
+                        if (rsp) {
+                            if (rsp.hasOwnProperty('cedulaClientes')) {
+                                data = Object.values(rsp);
+                                telefonoCliente.value = data[3];
+                                nombreCliente.value = data[2];
+                                emailCliente.value = data[1];
+                                direccionCliente.value = data[0];
+                            } else {
+                                modalgenerated.click();
+                                modaltitle.innerHTML = "Error";
+                                modaltext.innerHTML = `${data[1]}`;
+                            }
+                        } else {
+                            throw 'Cliente no encontrado';
+                        }
+                    }).catch((e) => {
+                        telefonoCliente.value = '';
+                        nombreCliente.value = '';
+                        emailCliente.value = '';
+                        direccionCliente.value = '';
+                        modalgenerated.click();
+                        modaltitle.innerHTML = "Error";
+                        modaltext.innerHTML = `Cliente no encontrado`;
+                    }
+                    )
+            }).catch((e) => {
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `${e.message}`;
+            });
+        } else {
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `Ingrese una cedulaClientes valida`;
+        }
+    }
+
+    //Crear cliente
+    createUser.onclick = async function () {
+        var elements = document.getElementById("clientForm").elements;
+        var obj = {};
+        for (var i = 0; i < elements.length; i++) {
+            var item = elements.item(i);
+            obj[item.id] = item.value;
+        }
+        event.preventDefault();
+        //const formData = new URLSearchParams(new FormData(this));
+        var flag = true;
+        Object.values(obj).forEach(x => {
+            x.length == 0 ? flag = false : flag = true;
+        })
+        if (flag) {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch("http://localhost:8090/mintic/tiendagenerica/api/client/saveclient",
+                    {
+                        method: 'POST',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                        body: JSON.stringify(obj)
+                    })
+                    .then(function (response) {
+                        return response.text()
+                    }).then(function (text) {
+                        if (text && JSON.parse(text).hasOwnProperty('cedulaClientes')) {
+                            var modalgenerated = document.getElementById("modal-generated");
+                            modalgenerated.click();
+                            var modaltitle = document.getElementById("modal-title");
+                            modaltitle.innerHTML = "Exito";
+                            var modaltext = document.getElementById("modal-message");
+                            modaltext.innerHTML = `Cliente guardado con exito`;
+                        } else {
+                            throw text;
+                        }
+                    }).catch((e) => {
+                        var modalgenerated = document.getElementById("modal-generated");
+                        modalgenerated.click();
+                        var modaltitle = document.getElementById("modal-title");
+                        modaltitle.innerHTML = "Error";
+                        var modaltext = document.getElementById("modal-message");
+                        let err = "";
+                        JSON.parse(e).errors.forEach(element => {
+                            err += element.field + " " + element.defaultMessage + "<br/> "
+                        })
+                        modaltext.innerHTML = `No se pudo crear el cliente: <br/> ${err}`;
+                    }
+                    );
+            }).catch((e) => {
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `${e.message}`;
+            });
+        } else {
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `Hay datos sin llenar`;
+        }
+    }
+
+    function rToken(token) {
+        return new Promise((resolve, reject) => {
+            try {
+                obj = {
+                    "refreshToken": token.refreshToken
+                }
+                fetch("http://localhost:8090/api/auth/refreshtoken",
+                    {
+                        method: 'POST',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                        body: JSON.stringify(obj)
+                    })
+                    .then(function (response) {
+                        return response.text();
+                    }).then(function (text) {
+                        if (JSON.parse(text).hasOwnProperty('accessToken')) {
+                            resolve(JSON.parse(text));
+                        } else {
+                            reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                        }
+                    }).catch((e) => {
+                        reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                    }
+                    );
+            } catch {
+                reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+            }
+        });
+    }
+
+    function logOut() {
+        sessionStorage.removeItem("user");
+        sessionStorage.clear();
+        localStorage.clear();
+        window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html";
+    }
+</script>
 
 </html>

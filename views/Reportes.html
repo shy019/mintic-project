@@ -31,7 +31,8 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="Inicio.html">Tienda Genérica</a>
+            <a class="navbar-brand" href="Principal.html">Inicio</a>
+            <a class="navbar-brand" href="#" onclick="logOut()">Salir</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menú
@@ -39,12 +40,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Usuarios.html">Usuarios</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Clientes.html">Clientes</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                    <li id="linkUsuarios" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Usuarios.html">Usuarios</a></li>
+                    <li id="linkClientes" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Clientes.html">Clientes</a></li>
+                    <li id="linkProveedores" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="proveedores.html">Proveedores</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Ventas.html">Ventas</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Reportes.html">Reportes</a></li>
+                    <li id="linkProductos" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Productos.html">Productos</a></li>
+                    <li id="linkVentas" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Ventas.html">Ventas</a></li>
+                    <li id="linkReportes" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="Reportes.html">Reportes</a></li>
                 </ul>
             </div>
         </div>
@@ -55,8 +62,8 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="page-heading">
-                        <h1>MinticApp</h1>
-                        <span class="subheading">Reportes</span>
+                        <h1>REPORTES</h1>
+                        <span class="subheading" id="title-page">Reportes</span>
                     </div>
                 </div>
             </div>
@@ -67,54 +74,31 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="my-5">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-
-                        <!-- to get an API token!-->
-                        <!--<div class="post-preview">
-                                <h2 class="post-title">Bienvenidos a la Tienda Genérica</h2>
-                                <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
-                            <p class="post-meta">
-                                Creado por
-                                <a href="#!">Cristian Pérez</a>
-                                el 04 de Septiembre de 2021
-                            </p>
-                        </div>-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
-                                    <div class="fw-bolder">Form submission successful!</div>
-                                    To activate this form, sign up at
-                                    <br />
-                                    <a
-                                        href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                </div>
+                        <div class="d-none" id="submitSuccessMessage">
+                            <div class="text-center mb-3">
+                                <div class="fw-bolder">Form submission successful!</div>
+                                To activate this form, sign up at
+                                <br />
+                                <a
+                                    href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                             </div>
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
-                            <div class="d-none" id="submitErrorMessage">
-                                <div class="text-center text-danger mb-3">Error sending message!</div>
-                            </div>
-                            <!-- Submit Button-->
-                            <div class="d-flex flex-column bd-highlight mb-3">
-                                <button style="margin: 10px;" class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Listado de Usuarios</button>
-                                <button style="margin: 10px;" class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Listado de Clientes</button>
-                                <button style="margin: 10px;" class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Ventas por Cliente</button>
-                            </div>
-                        </form>
+                        </div>
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div class="d-none" id="submitErrorMessage">
+                            <div class="text-center text-danger mb-3">Error sending message!</div>
+                        </div>
+                        <!-- Submit Button-->
+                        <div class="d-flex flex-column bd-highlight mb-3">
+                            <button style="margin: 10px;" class="btn btn-primary text-uppercase"
+                                id="reporteUsuarios">Listado de Usuarios</button>
+                            <button style="margin: 10px;" class="btn btn-primary text-uppercase"
+                                id="reporteClientes">Listado de Clientes</button>
+                            <button style="margin: 10px;" class="btn btn-primary text-uppercase"
+                                id="reporteVentas">Ventas por Cliente</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,5 +142,108 @@
         </div>
     </footer>
 </body>
+<script>
+    var userLoaded = localStorage.getItem("user");
+
+    funcionarMenu(userLoaded);
+
+    var titulo = document.getElementById("title-page");
+    var tituloAnterior = titulo
+    let pass;
+    //Colocar Titulo
+    titulo.innerText = "Conectado como: " + JSON.parse(userLoaded)?.username;
+    rToken(JSON.parse(userLoaded));
+
+    function funcionarMenu(userLoaded) {
+        var linkUsuarios = document.getElementById("linkUsuarios");
+        var linkClientes = document.getElementById("linkClientes");
+        var linkProveedores = document.getElementById("linkProveedores");
+        var linkVentas = document.getElementById("linkVentas");
+        var linkReportes = document.getElementById("linkReportes");
+        let role = 0;
+        for (let index = 0; index < JSON.parse(userLoaded)?.roles.length; index++) {
+            if (JSON.parse(userLoaded)?.roles[index] == "ROLE_USER") {
+                role += 1;
+            } else if (JSON.parse(userLoaded)?.roles[index] == "ROLE_MODERATOR") {
+                role += 2;
+            } else if (JSON.parse(userLoaded)?.roles[index] == "ROLE_ADMIN") {
+                role += 4;
+            }
+        }
+        if (role == 3 || role == 2) {
+            linkUsuarios.style = "display: none;";
+            linkClientes.style = "display: block;";
+            linkProveedores.style = "display: block;";
+        } else if (role == 1) {
+            linkUsuarios.style = "display: none;";
+            linkClientes.style = "display: none;";
+            linkProveedores.style = "display: none;";
+        }
+    }
+
+    var reporteUsuarios = document.getElementById("reporteUsuarios");
+    var reporteClientes = document.getElementById("reporteClientes");
+    var reporteVentas = document.getElementById("reporteVentas");
+
+    reporteUsuarios.onclick = function () {
+        window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/ReporteUsuarios.html"
+    }
+    reporteClientes.onclick = function () {
+        window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/ReporteClientes.html"
+    }
+    reporteVentas.onclick = function () {
+        window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/ReporteVentas.html"
+    }
+
+    function rToken(token) {
+        return new Promise((resolve, reject) => {
+            try {
+                obj = {
+                    "refreshToken": token.refreshToken
+                }
+                fetch("http://localhost:8090/api/auth/refreshtoken",
+                    {
+                        method: 'POST',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                        body: JSON.stringify(obj)
+                    })
+                    .then(function (response) {
+                        return response.text();
+                    }).then(function (text) {
+                        if (JSON.parse(text).hasOwnProperty('accessToken')) {
+                            resolve(JSON.parse(text));
+                        } else {
+                            reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                        }
+                    }).catch((e) => {
+                        reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                    }
+                    );
+            } catch {
+                reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+            }
+        });
+    }
+
+    function logOut() {
+        sessionStorage.removeItem("user");
+        sessionStorage.clear();
+        localStorage.clear();
+        window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html";
+    }
+</script>
 
 </html>
