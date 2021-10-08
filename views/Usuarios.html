@@ -498,9 +498,9 @@
                             body: JSON.stringify(obj)
                         })
                         .then(function (response) {
-                            return response.text()
+                            return response
                         }).then(function (text) {
-                            if (text && JSON.parse(text).hasOwnProperty('message')) {
+                            if (text && text.status == '200') {
                                 var modalgenerated = document.getElementById("modal-generated");
                                 modalgenerated.click();
                                 var modaltitle = document.getElementById("modal-title");
@@ -508,7 +508,7 @@
                                 var modaltext = document.getElementById("modal-message");
                                 modaltext.innerHTML = `Usuario guardado con exito`;
                             } else {
-                                throw text;
+                                throw text.text;
                             }
                         }).catch((e) => {
                             var modalgenerated = document.getElementById("modal-generated");
