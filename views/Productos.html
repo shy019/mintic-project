@@ -92,16 +92,6 @@
                             </p>
                         </div>-->
                         <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            <div class="form-floating">
-                                <input class="form-control" id="name" type="text"
-                                    placeholder="Ingresa tu Nombre del Archivo..." data-sb-validations="required" />
-                                <label for="name">Nombre del Archivo</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">Nombre del archivo
-                                    requerido.</div>
-                                <div class="invalid-feedback" data-sb-feedback="name:password">No es un Nombre valido.
-                                </div>
-                            </div>
-                            <br />
                             <!-- Submit success message-->
                             <!---->
                             <!-- This is what your users will see when the form-->
@@ -122,19 +112,47 @@
                             <div class="d-none" id="submitErrorMessage">
                                 <div class="text-center text-danger mb-3">Error sending message!</div>
                             </div>
-                            <!-- Submit Button-->
-                            <div class="" style="display: flex; justify-content: space-evenly;">
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Examinar</button>
-                                <br />
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                    type="submit">Cargar</button>
-                            </div>
                         </form>
+                        <!-- Submit Button-->
+                        <p class="text-uppercase" style="text-align: center;">Formatos Válidos: Csv, txt, xlsx.</p>
+                        <div class="" style="display: grid; justify-content: space-evenly;">
+
+                            <textarea id="contenido" rows="4" cols="30" style="width:500px;height:300px"></textarea>
+
+                            <input class="btn btn-primary text-uppercase" type="file" id="file" />
+                        </div>
+                        <br>
+                        <div class="" style="display: grid; justify-content: space-evenly;">
+                            <button id="loadInfo" onclick="sendInfo()" class="btn btn-primary text-uppercase ">Cargar
+                                Información al
+                                Sistema</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <button id="modal-generated" type="button" style="display: none;" class="btn btn-primary" onclick='openModal()'>
+            Launch demo modal
+        </button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
+            role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title"></h5>
+                        <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div id="modal-message" class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
     </main>
     <!-- Footer-->
     <footer class="border-top">
@@ -176,6 +194,100 @@
 </body>
 <script>
     var userLoaded = localStorage.getItem("user");
+
+    //Abrir modal
+    function openModal() {
+        document.getElementById("backdrop").style.display = "block"
+        document.getElementById("exampleModal").style.display = "block"
+        document.getElementById("exampleModal").classList.add("show")
+    }
+    //Cerrar modal
+    function closeModal() {
+        document.getElementById("backdrop").style.display = "none"
+        document.getElementById("exampleModal").style.display = "none"
+        document.getElementById("exampleModal").classList.remove("show")
+    }
+    var modal = document.getElementById('exampleModal');
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            closeModal()
+        }
+    }
+    const input = document.getElementById('file');
+    const editor = document.getElementById('contenido');
+    input.addEventListener('change', function () {
+        if (input.files.length > 0) {
+            let typeFile = input.files[0].name.split(".");
+            if (typeFile && (typeFile[typeFile.length - 1] == "csv" || typeFile[typeFile.length - 1] == "xlsx" || typeFile[typeFile.length - 1] == "txt")) {
+                readFile(input.files[0]);
+            } else {
+                var modalgenerated = document.getElementById("modal-generated");
+                modalgenerated.click();
+                var modaltitle = document.getElementById("modal-title");
+                modaltitle.innerHTML = "Error";
+                var modaltext = document.getElementById("modal-message");
+                modaltext.innerHTML = `No ha insertado un archivo válido o no ha insertado un archivo.`;
+            }
+        }
+    });
+    var dataReaded = [];
+    let arrayTemporal = [];
+    function readFile(file) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            editor.value = reader.result;
+            window.value = divideProducts(reader.result);
+        }
+        reader.readAsText(file);
+    }
+
+    function loadSupplier(supplierId) {
+        return new Promise((resolve, reject) => {
+            try {
+                setTimeout(() => {
+                    searchSupplier(supplierId).then((rsp) => {
+                        resolve(rsp)
+                    });
+                }, 200)
+            } catch (e) {
+                reject(console.log(e))
+            }
+        })
+    }
+
+    async function divideProducts(data) {
+        try {
+            let arrayDataLoaded = [];
+            this.arrayTemporal = data.split("\r\n");
+            for await (element of this.arrayTemporal) {
+                element = element.split(",");
+                let dataLoaded = {};
+                if (element.length > 3) {
+                    dataLoaded.codigoProducto = Number.parseInt(element[0]);
+                    dataLoaded.ivaCompra = Number.parseFloat(element[1]);
+                    dataLoaded.nombreProducto = element[2];
+                    dataLoaded.precioCompra = Number.parseInt(element[3]);
+                    dataLoaded.precioVenta = Number.parseInt(element[4]);
+                    await loadSupplier(Number.parseInt(element[5])).then((rsp) => {
+                        dataLoaded.nitProveedor = rsp;
+                        arrayDataLoaded.push(dataLoaded);
+                    });
+                }
+            }
+            return arrayDataLoaded;
+        }
+        catch (e) {
+            console.log(e)
+            arrayDataLoaded = [];
+            var modalgenerated = document.getElementById("modal-generated");
+            modalgenerated.click();
+            var modaltitle = document.getElementById("modal-title");
+            modaltitle.innerHTML = "Error";
+            var modaltext = document.getElementById("modal-message");
+            modaltext.innerHTML = `Los datos que contiene el archivo no son de tipo Producto`;
+        }
+    }
 
     funcionarMenu(userLoaded);
 
@@ -261,6 +373,139 @@
         sessionStorage.clear();
         localStorage.clear();
         window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html";
+    }
+
+    loadInfo.onclick = async function () {
+        let dataReader = await window.value;
+        if (dataReader && (dataReader == null || dataReader == "")) {
+            var modalgenerated = document.getElementById("modal-generated");
+            modalgenerated.click();
+            var modaltitle = document.getElementById("modal-title");
+            modaltitle.innerHTML = "Error";
+            var modaltext = document.getElementById("modal-message");
+            modaltext.innerHTML = `No ha insertado un archivo válido o no ha insertado un archivo.`;
+        } else {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch("http://localhost:8090/mintic/tiendagenerica/api/supplier/saveproducts",
+                    {
+                        method: 'POST',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                        body: JSON.stringify(dataReader)
+                    })
+                    .then(function (response) {
+                        return response
+                    }).then(function (text) {
+                        if (text && text.status == '200') {
+                            var modalgenerated = document.getElementById("modal-generated");
+                            modalgenerated.click();
+                            var modaltitle = document.getElementById("modal-title");
+                            modaltitle.innerHTML = "Exito";
+                            var modaltext = document.getElementById("modal-message");
+                            modaltext.innerHTML = `Productos guardados con exito`;
+                        } else {
+                            throw text;
+                        }
+                    }).catch((e) => {
+                        console.log(e)
+                        var modalgenerated = document.getElementById("modal-generated");
+                        modalgenerated.click();
+                        var modaltitle = document.getElementById("modal-title");
+                        modaltitle.innerHTML = "Error";
+                        var modaltext = document.getElementById("modal-message");
+                        let err = "";
+                        JSON.parse(e).errors.forEach(element => {
+                            err += element.field + " " + element.defaultMessage + "<br/> "
+                        })
+                        modaltext.innerHTML = `No se pudieron guardar los archivos: <br/> ${err}`;
+                    }
+                    );
+            }).catch((e) => {
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `${e.message}`;
+            });
+        }
+    }
+
+    //Buscar proveedor
+    function searchSupplier(supplier) {
+        return new Promise((resolve, reject) => {
+            try {
+                var modal = document.getElementById("myModal");
+                var modalgenerated = document.getElementById("modal-generated");
+                var modaltitle = document.getElementById("modal-title");
+                var modaltext = document.getElementById("modal-message");
+                var data;
+                let count = 0;
+                if (supplier > 0) {
+                    rToken(JSON.parse(userLoaded)).then((token) => {
+                        fetch(`http://localhost:8090/mintic/tiendagenerica/api/supplier/${supplier}`,
+                            {
+                                type: 'GET',
+                                mode: 'cors', // no-cors, *cors, same-origin
+                                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                                credentials: 'same-origin', // include, *same-origin, omit
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Access-Control-Allow-Origin': 'http://localhost:8090',
+                                    'Access-Control-Allow-Credentials': 'true',
+                                    'authorization': `Bearer ${token.accessToken}`
+                                    //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                                    //'Authorization': 
+                                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                redirect: 'follow', // manual, *follow, error
+                                referrerPolicy: 'no-referrer',
+                            })
+                            .then(response => response.json())
+                            .then(rsp => {
+                                if (rsp) {
+                                    if (rsp.hasOwnProperty('nitProveedor')) {
+                                        resolve(rsp);
+                                    } else {
+                                        modalgenerated.click();
+                                        modaltitle.innerHTML = "Error";
+                                        modaltext.innerHTML = `${data[1]}`;
+                                    }
+                                } else {
+                                    throw 'Proveedor no encontrado';
+                                }
+                            }).catch((e) => {
+                                console.log(e)
+                                modalgenerated.click();
+                                modaltitle.innerHTML = "Error";
+                                modaltext.innerHTML = `Proveedor no encontrado`;
+                            }
+                            )
+                    }).catch((e) => {
+                        console.log(e)
+                        modalgenerated.click();
+                        modaltitle.innerHTML = "Error";
+                        modaltext.innerHTML = `${e.message}`;
+                    });
+                } else {
+                    console.log(e)
+                    modalgenerated.click();
+                    modaltitle.innerHTML = "Error";
+                    modaltext.innerHTML = `Ingrese un nit valido`;
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        })
     }
 </script>
 
