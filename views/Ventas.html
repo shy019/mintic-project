@@ -91,116 +91,221 @@
                                 el 04 de Septiembre de 2021
                             </p>
                         </div>-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
 
-                            <div class="" style="display: flex; justify-content: space-evenly;">
-                                <div class="form-floating">
-                                    <input class="form-control" id="cedula" type="text"
-                                        placeholder="Ingresa tu cedula..." data-sb-validations="required" />
-                                    <label for="name">Cédula</label>
-                                    <div class="invalid-feedback" data-sb-feedback="cedula:required">Una Cedula es
-                                        requerida.</div>
-                                    <div class="invalid-feedback" data-sb-feedback="cedula:password">No es una Cedula
-                                        valida.</div>
-                                </div>
-                                <button style="margin: 10px;" class="btn btn-primary text-uppercase disabled"
-                                    id="submitButton" type="submit">Consultar</button>
-                                <div class="form-floating">
-                                    <input class="form-control" id="cliente" type="text"
-                                        placeholder="Ingresa tu cliente..." data-sb-validations="required" />
-                                    <label for="cliente">Cliente</label>
-                                    <div class="invalid-feedback" data-sb-feedback="cliente:required">Cliente requerido.
-                                    </div>
-                                    <div class="invalid-feedback" data-sb-feedback="cliente:password">No es una Cliente
-                                        valido.
-                                    </div>
-                                </div>
+                        <div class="" style="display: flex; justify-content: space-evenly;">
+                            <div class="form-floating">
+                                <input class="form-control" id="cedulaClientes" type="text"
+                                    placeholder="Ingresa tu cedula..." data-sb-validations="required" />
+                                <label for="name">Cédula</label>
                             </div>
-                            <br>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Cod. Producto</th>
-                                        <th scope="col"></th>
-                                        <th scope="col">Nombre Producto</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Valor Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                                type="submit">Consultar</button>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                                type="submit">Consultar</button>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                                type="submit">Consultar</button>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Total Venta</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Total IVA</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <button class="btn btn-primary text-uppercase disabled" id="submitButton"
-                                                type="submit">Confirmar</button>
-                                        </td>
-                                        <td>Total con IVA</td>
-                                        <td></td>
-                                    </tr>
-                                    <!--<tr>
+                            <button style="margin: 10px;" class="btn btn-primary text-uppercase" id="loadClient"
+                                type="submit">Consultar</button>
+                            <div class="form-floating">
+                                <input class="form-control" id="clienteLabel" type="text"
+                                    placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                <label for="cliente">Cliente</label>
+                            </div>
+                        </div>
+                        <br>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Cod. Producto</th>
+                                    <th scope="col"></th>
+                                    <th scope="col">Nombre Producto</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Valor Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" id="producto1" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary text-uppercase" id="buscarProducto1"
+                                            type="submit">Consultar</button>
+                                    </td>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" disabled id="nombreProducto1" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" id="cantidad1" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" disabled id="valorTotal1" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" id="producto2" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary text-uppercase" id="buscarProducto2"
+                                            type="submit">Consultar</button>
+                                    </td>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" disabled id="nombreProducto2" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" id="cantidad2" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" disabled id="valorTotal2" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" id="producto3" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary text-uppercase" id="buscarProducto3"
+                                            type="submit">Consultar</button>
+                                    </td>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" disabled id="nombreProducto3" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" id="cantidad3" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-floating">
+                                            <input class="form-control" disabled id="valorTotal3" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total Venta</td>
+                                    <td colspan="2">
+                                        <div class="form-floating">
+                                            <input class="form-control" disabled id="totalVenta" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Total IVA</td>
+                                    <td colspan="2">
+                                        <div class="form-floating">
+                                            <input class="form-control" disabled id="totalIva" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-primary text-uppercase" id="generateBill2"
+                                            type="submit">Confirmar</button>
+                                    </td>
+                                    <td>Total con IVA
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="form-floating">
+                                            <input class="form-control" disabled id="totalConIva" type="text"
+                                                placeholder="Ingresa tu cliente..." data-sb-validations="required" />
+                                            <label for="cliente"></label>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <!--<tr>
                                     <th scope="row">5</th>
                                     <td colspan="2">Larry the Bird</td>
                                     <td>@twitter</td>
                                   </tr>-->
-                                </tbody>
-                            </table>
-                        </form>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+        <button id="modal-generated2" type="button" style="display: none;" class="btn btn-primary"
+            onclick='openModal2()'>
+            Launch demo modal
+        </button>
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
+            role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title2"></h5>
+                        <button type="button" class="close" aria-label="Close" onclick="closeModal2()">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div id="modal-message2" class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary text-uppercase" id="generatePdf" type="submit">Confirmar</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal2()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop fade show" id="backdrop2" style="display: none;"></div>
         <button id="modal-generated" type="button" style="display: none;" class="btn btn-primary" onclick='openModal()'>
             Launch demo modal
         </button>
@@ -265,6 +370,40 @@
 <script>
     var userLoaded = localStorage?.getItem("user");
     funcionarMenu(userLoaded);
+
+    //Abrir modal2
+    function openModal2() {
+        document.getElementById("backdrop2").style.display = "block"
+        document.getElementById("exampleModal2").style.display = "block"
+        document.getElementById("exampleModal2").classList.add("show")
+    }
+    //Cerrar modal2
+    function closeModal2() {
+        document.getElementById("backdrop2").style.display = "none"
+        document.getElementById("exampleModal2").style.display = "none"
+        document.getElementById("exampleModal2").classList.remove("show")
+    }
+    var modal = document.getElementById('exampleModal2');
+
+    //Abrir modal
+    function openModal() {
+        document.getElementById("backdrop").style.display = "block"
+        document.getElementById("exampleModal").style.display = "block"
+        document.getElementById("exampleModal").classList.add("show")
+    }
+    //Cerrar modal
+    function closeModal() {
+        document.getElementById("backdrop").style.display = "none"
+        document.getElementById("exampleModal").style.display = "none"
+        document.getElementById("exampleModal").classList.remove("show")
+    }
+    var modal = document.getElementById('exampleModal');
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            closeModal()
+        }
+    }
 
     function logOut() {
         sessionStorage.removeItem("user");
@@ -348,6 +487,585 @@
                 reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
             }
         });
+    }
+
+    //Buscar cliente
+    loadClient.onclick = async function () {
+        var id = document.getElementById("cedulaClientes");
+        var name = document.getElementById("clienteLabel");
+        var modal = document.getElementById("myModal");
+        var modalgenerated = document.getElementById("modal-generated");
+        var modaltitle = document.getElementById("modal-title");
+        var modaltext = document.getElementById("modal-message");
+        var data;
+        let count = 0;
+        if (id.value.length > 0) {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch(`http://localhost:8090/mintic/tiendagenerica/api/client/${id.value}`,
+                    {
+                        type: 'GET',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                    })
+                    .then(response =>
+                        response.json()
+                    )
+                    .then(rsp => {
+                        if (rsp) {
+                            if (rsp.hasOwnProperty('cedulaClientes')) {
+                                data = Object.values(rsp);
+                                name.value = data[2];
+                                window.cliente = data;
+                                window.clienteFinal = rsp;
+                            } else {
+                                modalgenerated.click();
+                                modaltitle.innerHTML = "Error";
+                                modaltext.innerHTML = `${data[1]}`;
+                            }
+                        } else {
+                            throw 'Cliente no encontrado';
+                        }
+                    }).catch((e) => {
+                        modalgenerated.click();
+                        modaltitle.innerHTML = "Error";
+                        modaltext.innerHTML = `Cliente no encontrado`;
+                    }
+                    )
+            }).catch((e) => {
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `${e.message}`;
+            });
+        } else {
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `Ingrese una cedulaClientes valida`;
+        }
+    }
+
+    cantidad1.onkeyup = function () {
+        if (window.producto1 != null && window.producto1) {
+            if (window.producto1[5] > 1) {
+                var valorTotal1 = document.getElementById("valorTotal1");
+                var nombreProducto1 = document.getElementById("nombreProducto1");
+                var cantidad1 = document.getElementById("cantidad1");
+                var totalVenta = document.getElementById("totalVenta");
+                var totalIva = document.getElementById("totalIva");
+                var totalConIva = document.getElementById("totalConIva");
+                let data = window.producto1
+                if (cantidad1.value != null && cantidad1.value >= 0) {
+                    let totalVentaTemporal = window.totalVenta.value != "" ? window.totalVenta.value : 0;
+                    let totalIvaTemporal = window.totalIva.value != "" ? window.totalIva.value : 0;
+                    let totalConIvaTemporal = window.totalConIva.value != "" ? window.totalConIva.value : 0;
+                    let valorTotal1Temp = Math.round((cantidad1.value ? cantidad1.value : 0) * (data[5]));
+                    valorTotal1.value = new Intl.NumberFormat("CO-DC").format(valorTotal1Temp);
+                    let valorVentaTemp = Math.round(parseInt(totalVentaTemporal) + (parseInt(cantidad1.value ? cantidad1.value : 0) * (data[5])));
+                    totalVenta.value = new Intl.NumberFormat("CO-DC").format(valorVentaTemp);
+                    let valorTotalIvaTemp = Math.round(parseInt(totalIvaTemporal) + ((cantidad1.value > 0 ? (data[5] * (data[1] / 100)) : 0)) * cantidad1.value);
+                    totalIva.value = new Intl.NumberFormat("CO-DC").format(valorTotalIvaTemp);
+                    let valorTotalConIvaTemp = Math.round(parseInt(totalConIvaTemporal) + ((cantidad1.value > 0 ? ((data[5] * (data[1] / 100) + data[5])) : 0)) * cantidad1.value);
+                    totalConIva.value = new Intl.NumberFormat("CO-DC").format(valorTotalConIvaTemp);
+                    window.valorTotal1 = valorTotal1Temp;
+                    window.totalVenta.value = valorVentaTemp;
+                    window.totalIva.value = valorTotalIvaTemp;
+                    window.totalConIva.value = valorTotalConIvaTemp;
+                }
+            }
+        }
+    }
+
+    cantidad2.onkeyup = function () {
+        if (window.producto2 != null && window.producto2) {
+            if (window.producto2[5] > 1) {
+                var valorTotal2 = document.getElementById("valorTotal2");
+                var nombreProducto2 = document.getElementById("nombreProducto2");
+                var cantidad2 = document.getElementById("cantidad2");
+                var totalVenta = document.getElementById("totalVenta");
+                var totalIva = document.getElementById("totalIva");
+                var totalConIva = document.getElementById("totalConIva");
+                let data = window.producto2
+                if (cantidad2.value != null && cantidad2.value >= 0) {
+                    let totalVentaTemporal = window.totalVenta.value != "" ? window.totalVenta.value : 0;
+                    let totalIvaTemporal = window.totalIva.value != "" ? window.totalIva.value : 0;
+                    let totalConIvaTemporal = window.totalConIva.value != "" ? window.totalConIva.value : 0;
+                    let valorTotal2Temp = Math.round(parseInt(cantidad2.value ? cantidad2.value : 0) * (data[5]));
+                    valorTotal2.value = new Intl.NumberFormat("CO-DC").format(valorTotal2Temp);
+                    let valorVentaTemp = Math.round(parseInt(totalVentaTemporal) + (parseInt(cantidad2.value ? cantidad2.value : 0) * (data[5])));
+                    totalVenta.value = new Intl.NumberFormat("CO-DC").format(valorVentaTemp);
+                    let valorTotalIvaTemp = Math.round(parseInt(totalIvaTemporal) + ((cantidad2.value > 0 ? (data[5] * (data[1] / 100)) : 0)) * cantidad2.value);
+                    totalIva.value = new Intl.NumberFormat("CO-DC").format(valorTotalIvaTemp);
+                    let valorTotalConIvaTemp = Math.round(parseInt(totalConIvaTemporal) + ((cantidad2.value > 0 ? ((data[5] * (data[1] / 100) + data[5])) : 0)) * cantidad2.value);
+                    totalConIva.value = new Intl.NumberFormat("CO-DC").format(valorTotalConIvaTemp);
+                    window.valorTotal2 = valorTotal2Temp;
+                    window.totalVenta.value = valorVentaTemp;
+                    window.totalIva.value = valorTotalIvaTemp;
+                    window.totalConIva.value = valorTotalConIvaTemp;
+                }
+            }
+        }
+    }
+
+    cantidad3.onkeyup = function () {
+        if (window.producto3 != null && window.producto3) {
+            if (window.producto3[5] > 1) {
+                var valorTotal3 = document.getElementById("valorTotal3");
+                var nombreProducto3 = document.getElementById("nombreProducto3");
+                var cantidad3 = document.getElementById("cantidad3");
+                var totalVenta = document.getElementById("totalVenta");
+                var totalIva = document.getElementById("totalIva");
+                var totalConIva = document.getElementById("totalConIva");
+                let data = window.producto3
+                if (cantidad3.value != null && cantidad3.value >= 0) {
+                    let totalVentaTemporal = window.totalVenta.value != "" ? window.totalVenta.value : 0;
+                    let totalIvaTemporal = window.totalIva.value != "" ? window.totalIva.value : 0;
+                    let totalConIvaTemporal = window.totalConIva.value != "" ? window.totalConIva.value : 0;
+                    let valorTotal3Temp = Math.round((cantidad3.value ? cantidad3.value : 0) * (data[5]));
+                    valorTotal3.value = new Intl.NumberFormat("CO-DC").format(valorTotal3Temp);
+                    let valorVentaTemp = Math.round(parseInt(totalVentaTemporal) + (parseInt(cantidad3.value ? cantidad3.value : 0) * (data[5])));
+                    totalVenta.value = new Intl.NumberFormat("CO-DC").format(valorVentaTemp);
+                    let valorTotalIvaTemp = Math.round(parseInt(totalIvaTemporal) + ((cantidad3.value > 0 ? (data[5] * (data[1] / 100)) : 0)) * cantidad3.value);
+                    totalIva.value = new Intl.NumberFormat("CO-DC").format(valorTotalIvaTemp);
+                    let valorTotalConIvaTemp = Math.round(parseInt(totalConIvaTemporal) + ((cantidad3.value > 0 ? ((data[5] * (data[1] / 100) + data[5])) : 0)) * cantidad3.value);
+                    totalConIva.value = new Intl.NumberFormat("CO-DC").format(valorTotalConIvaTemp);
+                    window.valorTotal3 = valorTotal3Temp;
+                    window.totalVenta.value = valorVentaTemp;
+                    window.totalIva.value = valorTotalIvaTemp;
+                    window.totalConIva.value = valorTotalConIvaTemp;
+                }
+            }
+        }
+    }
+
+    generateBill2.onclick = function () {
+        var id1 = document.getElementById("producto1");
+        var id2 = document.getElementById("producto2");
+        var id3 = document.getElementById("producto3");
+        var nombreProducto1 = document.getElementById("nombreProducto1");
+        var nombreProducto2 = document.getElementById("nombreProducto2");
+        var nombreProducto3 = document.getElementById("nombreProducto3");
+        var cantidad1 = document.getElementById("cantidad1");
+        var cantidad2 = document.getElementById("cantidad2");
+        var cantidad3 = document.getElementById("cantidad3");
+        var totalVenta = document.getElementById("totalVenta");
+        var totalIva = document.getElementById("totalIva");
+        var totalConIva = document.getElementById("totalConIva");
+        var modalgenerated2 = document.getElementById("modal-generated2");
+        var modaltitle2 = document.getElementById("modal-title2");
+        var modaltext2 = document.getElementById("modal-message2");
+        if (window.cliente == undefined) {
+            var modalgenerated = document.getElementById("modal-generated");
+            var modaltitle = document.getElementById("modal-title");
+            var modaltext = document.getElementById("modal-message");
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `Ingrese un cliente`;
+        } else {
+            // if (Number.parseFloat(totalVenta.value > 0) && Number.parseFloat(totalIva.value > 0) && Number.parseFloat(totalConIva.value > 0)) {
+            let consecutive = Math.floor(Math.random() * 10000);
+            window.consecutive = consecutive;
+            modalgenerated2.click();
+            modaltitle2.innerHTML = `Consecutivo #TG-${consecutive}`;
+            modaltext2.innerHTML = `Usuario ${JSON.parse(userLoaded).name}. Desea confirmar la compra de:</br>
+            ${(((cantidad1.value > 0 && nombreProducto1.value.length > 0)) ? nombreProducto1.value.length > 0 ? "  *" + cantidad1.value + " unidades de " + nombreProducto1.value + ".</br>" : `` : ``)}
+            ${(((cantidad2.value > 0 && nombreProducto2.value.length > 0)) ? nombreProducto2.value.length > 0 ? "  *" + cantidad2.value + " unidades de " + nombreProducto2.value + ".</br>" : `` : ``)}
+            ${(((cantidad3.value > 0 && nombreProducto3.value.length > 0)) ? nombreProducto3.value.length > 0 ? "  *" + cantidad3.value + " unidades de " + nombreProducto3.value + ".</br>" : `` : ``)}
+            Por un monto de ${new Intl.NumberFormat("CO-DC").format(totalConIva.value)} pesos más IVA.`;
+            //}
+        }
+    }
+
+    generatePdf.onclick = async function () {
+        var clienteLabel = document.getElementById("clienteLabel");
+        var id1 = document.getElementById("producto1");
+        var id2 = document.getElementById("producto2");
+        var id3 = document.getElementById("producto3");
+        var nombreProducto1 = document.getElementById("nombreProducto1");
+        var nombreProducto2 = document.getElementById("nombreProducto2");
+        var nombreProducto3 = document.getElementById("nombreProducto3");
+        var cantidad1 = document.getElementById("cantidad1");
+        var cantidad2 = document.getElementById("cantidad2");
+        var cantidad3 = document.getElementById("cantidad3");
+        var totalVenta = document.getElementById("totalVenta");
+        var totalIva = document.getElementById("totalIva");
+        var totalConIva = document.getElementById("totalConIva");
+        console.log(JSON.parse(userLoaded))
+        let arrayProductos = [];
+        window.producto1.length < 10 ? window.producto1[6] = (cantidad1.value !== 0 ? cantidad1.value : 0) : null;
+        window.producto2.length < 10 ? window.producto2[6] = (cantidad2.value !== 0 ? cantidad2.value : 0) : null;
+        window.producto3.length < 10 ? window.producto3[6] = (cantidad3.value !== 0 ? cantidad3.value : 0) : null;
+        window.producto1.length < 10 ? window.producto1[7] = (window.valorTotal1 !== 0 ? window.valorTotal1 : 0) : null;
+        window.producto2.length < 10 ? window.producto2[7] = (window.valorTotal2 !== 0 ? window.valorTotal2 : 0) : null;
+        window.producto3.length < 10 ? window.producto3[7] = (window.valorTotal3 !== 0 ? window.valorTotal3 : 0) : null;
+        window.producto1.length < 10 ? arrayProductos.push(window.producto1) : null;
+        window.producto2.length < 10 ? arrayProductos.push(window.producto2) : null;
+        window.producto3.length < 10 ? arrayProductos.push(window.producto3) : null;
+        console.log(arrayProductos)
+        let obj = {
+            "cedulaClientes": window.clienteFinal,
+            "codigoVenta": window.consecutive,
+            "ivaVenta": totalIva.value,
+            "totalVenta": totalVenta.value,
+            "valorVenta": totalConIva.value,
+            "cedulaUsuario": JSON.parse(userLoaded).id,
+            "codigoProducto": arrayProductos
+        }
+        await rToken(JSON.parse(userLoaded)).then((token) => {
+            fetch("http://localhost:8090/mintic/tiendagenerica/api/sale/savesale",
+                {
+                    method: 'POST',
+                    mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': 'http://localhost:8090',
+                        'Access-Control-Allow-Credentials': 'true',
+                        'authorization': `Bearer ${token.accessToken}`
+                        //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                        //'Authorization': 
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    redirect: 'follow', // manual, *follow, error
+                    referrerPolicy: 'no-referrer',
+                    body: JSON.stringify(obj)
+                })
+                .then(function (response) {
+                    return response.text()
+                }).then(function (text) {
+                    console.log(text)
+                    let objFinal = {
+                        "arrayProductos": arrayProductos,
+                        "totalVenta": totalVenta.value,
+                        "totalIva": totalIva.value,
+                        "totalConIva": totalConIva.value,
+                        "user": JSON.parse(userLoaded),
+                        "cliente": window.cliente,
+                        "ordenCompra": window.consecutive
+
+                    };
+                    localStorage.setItem("dataReport", JSON.stringify(objFinal));
+                    window.location.href = "C:/Users/david/OneDrive/Im%C3%A1genes/mintic/sales_invoice/Reporte.html";
+                    /*
+                    if (text && JSON.parse(text).hasOwnProperty('nitProveedor')) {
+                        var modalgenerated = document.getElementById("modal-generated");
+                        modalgenerated.click();
+                        var modaltitle = document.getElementById("modal-title");
+                        modaltitle.innerHTML = "Exito";
+                        var modaltext = document.getElementById("modal-message");
+                        modaltext.innerHTML = `Proveedor guardado con exito`;
+                    } else {
+                        throw text;
+                    }*/
+                }).catch((e) => {
+                    var modalgenerated = document.getElementById("modal-generated");
+                    modalgenerated.click();
+                    var modaltitle = document.getElementById("modal-title");
+                    modaltitle.innerHTML = "Error";
+                    var modaltext = document.getElementById("modal-message");
+                    let err = "";
+                    JSON.parse(e).errors.forEach(element => {
+                        err += element.field + " " + element.defaultMessage + "<br/> "
+                    })
+                    modaltext.innerHTML = `No se pudo crear el proveedor: <br/> ${err}`;
+                }
+                );
+        }).catch((e) => {
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `${e.message}`;
+        });
+    }
+
+
+    /*
+        async function loadConsecutive() {
+            return await (function()  {
+                fetch(`http://localhost:8090/mintic/tiendagenerica/api/sale/all`,
+                    {
+                        type: 'GET',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${JSON.parse(userLoaded).accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                    })
+                    .then(response => response.json())
+                    .then(rsp => {
+                        if (rsp) {
+                            if(rsp[0] == null){
+                                return 0;
+                            }
+                        } else {
+                            throw 'El código no se pudo generar, intente otra vez.';
+                        }
+                    }).catch((e) => {
+                        modalgenerated.click();
+                        modaltitle.innerHTML = "Error";
+                        modaltext.innerHTML = `El código no se pudo generar, intente otra vez`;
+                    }
+                    )
+            })
+        }*/
+
+    //Buscar producto 1
+    buscarProducto1.onclick = async function () {
+        var id = document.getElementById("producto1");
+        var valorTotal1 = document.getElementById("valorTotal1");
+        var nombreProducto1 = document.getElementById("nombreProducto1");
+        var cantidad1 = document.getElementById("cantidad1");
+        var totalVenta = document.getElementById("totalVenta");
+        var totalIva = document.getElementById("totalIva");
+        var totalConIva = document.getElementById("totalConIva");
+        var modal = document.getElementById("myModal");
+        var modalgenerated = document.getElementById("modal-generated");
+        var modaltitle = document.getElementById("modal-title");
+        var modaltext = document.getElementById("modal-message");
+        var data;
+        let count = 0;
+        if (id.value.length > 0) {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch(`http://localhost:8090/mintic/tiendagenerica/api/supplier/product/${id.value}`,
+                    {
+                        type: 'GET',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                    })
+                    .then(response => response.json())
+                    .then(rsp => {
+                        if (rsp) {
+                            if (rsp.hasOwnProperty('nombreProducto')) {
+                                data = Object.values(rsp);
+                                window.producto1 = data;
+                                nombreProducto1.value = data[3];
+                            } else {
+                                var modalgenerated = document.getElementById("modal-generated");
+                                var modaltitle = document.getElementById("modal-title");
+                                var modaltext = document.getElementById("modal-message");
+                                modalgenerated.click();
+                                modaltitle.innerHTML = "Error";
+                                modaltext.innerHTML = `${data[1]}`;
+                            }
+                        } else {
+                            throw 'Producto no encontrado';
+                        }
+                    }).catch((e) => {
+                        var modalgenerated = document.getElementById("modal-generated");
+                        var modaltitle = document.getElementById("modal-title");
+                        var modaltext = document.getElementById("modal-message");
+                        modalgenerated.click();
+                        modaltitle.innerHTML = "Error";
+                        modaltext.innerHTML = `Producto no encontrado`;
+                    }
+                    )
+            }).catch((e) => {
+                var modalgenerated = document.getElementById("modal-generated");
+                var modaltitle = document.getElementById("modal-title");
+                var modaltext = document.getElementById("modal-message");
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `${e.message}`;
+            });
+        } else {
+            var modalgenerated = document.getElementById("modal-generated");
+            var modaltitle = document.getElementById("modal-title");
+            var modaltext = document.getElementById("modal-message");
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `Ingrese un código de producto válido`;
+        }
+    }
+
+    //Buscar producto 2
+    buscarProducto2.onclick = async function () {
+        var id = document.getElementById("producto2");
+        var valorTotal2 = document.getElementById("valorTotal2");
+        var nombreProducto2 = document.getElementById("nombreProducto2");
+        var cantidad2 = document.getElementById("cantidad2");
+        var totalVenta = document.getElementById("totalVenta");
+        var totalIva = document.getElementById("totalIva");
+        var totalConIva = document.getElementById("totalConIva");
+        var modal = document.getElementById("myModal");
+        var modalgenerated = document.getElementById("modal-generated");
+        var modaltitle = document.getElementById("modal-title");
+        var modaltext = document.getElementById("modal-message");
+        var data;
+        let count = 0;
+        if (id.value.length > 0) {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch(`http://localhost:8090/mintic/tiendagenerica/api/supplier/product/${id.value}`,
+                    {
+                        type: 'GET',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                    })
+                    .then(response => response.json())
+                    .then(rsp => {
+                        if (rsp) {
+                            if (rsp.hasOwnProperty('nombreProducto')) {
+                                data = Object.values(rsp);
+                                nombreProducto2.value = data[3];
+                                window.producto2 = data;
+                            } else {
+                                var modalgenerated = document.getElementById("modal-generated");
+                                var modaltitle = document.getElementById("modal-title");
+                                var modaltext = document.getElementById("modal-message");
+                                modalgenerated.click();
+                                modaltitle.innerHTML = "Error";
+                                modaltext.innerHTML = `${data[1]}`;
+                            }
+                        } else {
+                            throw 'Producto no encontrado';
+                        }
+                    }).catch((e) => {
+                        var modalgenerated = document.getElementById("modal-generated");
+                        var modaltitle = document.getElementById("modal-title");
+                        var modaltext = document.getElementById("modal-message");
+                        modalgenerated.click();
+                        modaltitle.innerHTML = "Error";
+                        modaltext.innerHTML = `Producto no encontrado`;
+                    }
+                    )
+            }).catch((e) => {
+                var modalgenerated = document.getElementById("modal-generated");
+                var modaltitle = document.getElementById("modal-title");
+                var modaltext = document.getElementById("modal-message");
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `${e.message}`;
+            });
+        } else {
+            var modalgenerated = document.getElementById("modal-generated");
+            var modaltitle = document.getElementById("modal-title");
+            var modaltext = document.getElementById("modal-message");
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `Ingrese un código de producto válido`;
+        }
+    }
+
+    //Buscar producto 3
+    buscarProducto3.onclick = async function () {
+        var id = document.getElementById("producto3");
+        var valorTotal3 = document.getElementById("valorTotal3");
+        var nombreProducto3 = document.getElementById("nombreProducto3");
+        var cantidad3 = document.getElementById("cantidad3");
+        var totalVenta = document.getElementById("totalVenta");
+        var totalIva = document.getElementById("totalIva");
+        var totalConIva = document.getElementById("totalConIva");
+        var modal = document.getElementById("myModal");
+        var modalgenerated = document.getElementById("modal-generated");
+        var modaltitle = document.getElementById("modal-title");
+        var modaltext = document.getElementById("modal-message");
+        var data;
+        let count = 0;
+        if (id.value.length > 0) {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch(`http://localhost:8090/mintic/tiendagenerica/api/supplier/product/${id.value}`,
+                    {
+                        type: 'GET',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                    })
+                    .then(response => response.json())
+                    .then(rsp => {
+                        if (rsp) {
+                            if (rsp.hasOwnProperty('nombreProducto')) {
+                                data = Object.values(rsp);
+                                nombreProducto3.value = data[3];
+                                window.producto3 = data;
+                            } else {
+                                var modalgenerated = document.getElementById("modal-generated");
+                                var modaltitle = document.getElementById("modal-title");
+                                var modaltext = document.getElementById("modal-message");
+                                modalgenerated.click();
+                                modaltitle.innerHTML = "Error";
+                                modaltext.innerHTML = `${data[1]}`;
+                            }
+                        } else {
+                            throw 'Producto no encontrado';
+                        }
+                    }).catch((e) => {
+                        var modalgenerated = document.getElementById("modal-generated");
+                        var modaltitle = document.getElementById("modal-title");
+                        var modaltext = document.getElementById("modal-message");
+                        modalgenerated.click();
+                        modaltitle.innerHTML = "Error";
+                        modaltext.innerHTML = `Producto no encontrado`;
+                    }
+                    )
+            }).catch((e) => {
+                var modalgenerated = document.getElementById("modal-generated");
+                var modaltitle = document.getElementById("modal-title");
+                var modaltext = document.getElementById("modal-message");
+                modalgenerated.click();
+                modaltitle.innerHTML = "Error";
+                modaltext.innerHTML = `${e.message}`;
+            });
+        } else {
+            var modalgenerated = document.getElementById("modal-generated");
+            var modaltitle = document.getElementById("modal-title");
+            var modaltext = document.getElementById("modal-message");
+            modalgenerated.click();
+            modaltitle.innerHTML = "Error";
+            modaltext.innerHTML = `Ingrese un código de producto válido`;
+        }
     }
 </script>
 

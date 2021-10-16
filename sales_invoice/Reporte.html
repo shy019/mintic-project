@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Factura</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+  <div class="control-bar">
+    <div class="container">
+      <div class="row">
+        <div class="col-2-4">
+          <div class="slogan">Facturación </div>
+
+          <label for="config_tax">IVA:
+            <input type="checkbox" id="config_tax" />
+          </label>
+          <label for="config_tax_rate" class="taxrelated">Tasa:
+            <input type="text" id="config_tax_rate" value="16" />%
+          </label>
+          <label for="config_note">Nota:
+            <input type="checkbox" id="config_note">
+          </label>
+
+        </div>
+        <div class="col-4 text-right">
+          <a href="javascript:window.print()">Imprimir</a>
+        </div>
+        <!--.col-->
+      </div>
+      <!--.row-->
+    </div>
+    <!--.container-->
+  </div>
+  <!--.control-bar-->
+
+  <header class="row">
+    <div class="logoholder text-center">
+      <img src="assets/img/logo2.png" style="height: 20%; width: 120%;">
+    </div>
+    <!--.logoholder-->
+
+    <div class="me">
+      <p>
+        <strong>Tienda Génerica</strong><br>
+        Bogotá D.C.<br>
+        2021.<br>
+
+      </p>
+    </div>
+    <!--.me-->
+
+    <div class="info">
+      <p>
+        Web: <a
+          href="C:/Users/david/OneDrive/Im%C3%A1genes/mintic/views/Principal.html">www.tienda-generica-grupo7.com</a><br>
+        E-mail: <a href="mailto:cristianpg123@hotmail.com">info@tienda-generica.com</a><br>
+        Tel: +320 413 2365<br>
+        Twitter: @DrFSharkness
+      </p>
+    </div><!-- .info -->
+
+    <div class="bank">
+      <p>
+        Datos bacarios: Colpatria<br>
+        Titular de la cuenta:
+      <p id="titularCuenta"></p>
+      IBAN: 021000089<br>
+      BIC: CITIUS33
+      </p>
+    </div>
+    <!--.bank-->
+
+  </header>
+
+
+  <div class="row section">
+
+    <div class="col-2">
+      <h1>Factura</h1>
+    </div>
+    <!--.col-->
+
+    <div class="col-2 text-right details">
+      <p>
+        Fecha: <input type="text" id="fechaHoy" class="datePicker" /><br>
+        Factura #: <input type="text" id="factura" value="100" /><br><br>
+      </p>
+    </div>
+    <!--.col-->
+
+
+
+    <div class="col-2">
+      <div id="clienteFactura"></div>
+    </div>
+    <!--.col-->
+
+
+    <div class="col-2">
+      <div id="clienteEnvio"></div>
+    </div>
+
+
+
+  </div>
+  <!--.row-->
+
+  <div id="vendedor"></div>
+
+  </div>
+  <!--.row-->
+
+  <div id="datosProductos">
+  </div>
+  <!--<a class="control newRow" href="#">+ Nueva fila</a>-->
+  </div>
+  <!--.invoice-body-->
+
+  <div class="invoicelist-footer">
+    <table>
+      <tr class="taxrelated">
+        <td>IVA:</td>
+        <td id="total_tax"></td>
+      </tr>
+      <tr>
+        <td><strong>Total:</strong></td>
+        <td id="total_price"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="note" contenteditable>
+    <h2>Nota:</h2>
+  </div>
+  <!--.note-->
+
+  <footer class="row">
+    <div class="col-1 text-center">
+      <p class="notaxrelated">El monto de la factura no incluye el impuesto sobre las ventas.</p>
+
+    </div>
+  </footer>
+  <script>
+    oncharge();
+    function oncharge() {
+      var dataLoaded = localStorage?.getItem("dataReport");
+      var factura = document.getElementById("factura");
+      var clienteEnvio = document.getElementById("clienteEnvio");
+      var clienteFactura = document.getElementById("clienteFactura");
+      var titularCuenta = document.getElementById("titularCuenta");
+      var datosProductos = document.getElementById("datosProductos");
+      var vendedor = document.getElementById("vendedor");
+      var fechaHoy = document.getElementById("fechaHoy");
+      let data = Object.values(JSON.parse(dataLoaded))
+      let arrayTemp = data[0];
+      console.log(data)
+      let clienteEnvioInfo = "";
+      clienteEnvioInfo += `
+
+
+      <p class="client">
+        <strong>Facturar a</strong><br>
+        Nombre: ${data[5][2]}<br>
+        Dirección: ${data[5][0]}<br>
+        Teléfono: ${data[5][3]}
+      </p>`;
+      let clienteFacturaInfo = "";
+      clienteFacturaInfo += `
+
+
+      <p class="client">
+        <strong>Facturar a</strong><br>
+        Nombre: ${data[5][2]}<br>
+        Dirección: ${data[5][0]}<br>
+        Teléfono: ${data[5][3]}
+      </p>`;
+
+      let vendedorInfo = "";
+      vendedorInfo += `
+  <div class="row section" style="margin-top:-1rem">
+    <div class="col-1">
+      <table style='width:100%'>
+        <thead>
+          <tr class="invoice_detail">
+            <th width="25%" style="text-align">Vendedor</th>
+            <th width="25%">Orden de compra </th>
+            <th width="20%">Enviar por</th>
+            <th width="30%">Términos y condiciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="invoice_detail">
+            <td width="25%" style="text-align">${data[4].name}</td>
+            <td width="25%">#TG-${data[6]}</td>
+            <td width="20%">DHL</td>
+            <td width="30%">Pago al contado</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>`;
+
+      let productosInfo = "";
+      productosInfo += `
+    <div class="invoicelist-body">
+      <table>
+        <thead>
+          <th width="5%">Código</th>
+          <th width="60%">Descripción</th>
+
+          <th width="10%">Cant.</th>
+          <th width="15%">Precio c/U</th>
+          <th class="taxrelated">IVA</th>
+          <th width="10%">Total</th>
+        </thead>
+        <tbody>
+          `;
+      arrayTemp.forEach(element => {
+        productosInfo += `
+        <tr>
+            <td width='5%'><a class="control removeRow" href="#">x</a> <span>${element[0]}</span></td>
+            <td width='60%'><span>${element[3]}</span></td>
+            <td class="amount"><input type="text" value="${element[6]}" /></td>
+            <td class="rate"><input type="text" value="${element[4]}" /></td>
+            <td class="tax taxrelated">${element[5]}</td>
+            <td class="sum">${element[7]}</td>
+        </tr>`
+      });
+      productosInfo += `
+        </tbody >
+      </table >`;
+      factura.value = "TG-"+data[6];
+      titularCuenta.innerHTML = data[4].name;
+      fechaHoy.value = Date.now();
+      clienteEnvio.innerHTML = clienteEnvioInfo;
+      clienteFactura.innerHTML = clienteFacturaInfo;
+      datosProductos.innerHTML = productosInfo;
+      vendedor.innerHTML = vendedorInfo;
+    }
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="assets/bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>
