@@ -130,9 +130,9 @@
         </div>
     </footer>
     <script>
+        let table = document.getElementById("table");
         var userLoaded = localStorage.getItem("user");
-
-        funcionarMenu(userLoaded);
+        loadClients();
 
         var titulo = document.getElementById("title-page");
         var tituloAnterior = titulo
@@ -140,6 +140,69 @@
         //Colocar Titulo
         titulo.innerText = "Conectado como: " + JSON.parse(userLoaded)?.username;
         rToken(JSON.parse(userLoaded));
+        funcionarMenu(userLoaded);
+
+        function loadTable(data, table) {
+            let contador = 0;
+            if (!document.getElementsByTagName) return;
+            for (let element of data) {
+                contador++;
+                let obj = {
+                    id: contador,
+                    cedula: element[0],
+                    nombre: element[1],
+                    valorTotalVentas: new Intl.NumberFormat("CO-DC").format(element[2])
+                }
+                let row = table.insertRow();
+                for (key in obj) {
+                    let text = "";
+                    let cell = row.insertCell();
+                    text = document.createTextNode(obj[key] == null ? "" : key == "password" ? coverPassword(obj[key].length) : obj[key]);
+                    cell.appendChild(text);
+                }
+            }
+        }
+
+        function coverPassword(number) {
+            let text = "";
+            number = 6;
+            while (number > 0) {
+                text += "*";
+                number--;
+            }
+            return text;
+        }
+
+        //Buscar usuarios
+        async function loadClients() {
+            await rToken(JSON.parse(userLoaded)).then((token) => {
+                fetch(`http://localhost:8090/mintic/tiendagenerica/api/sale/saleclient`,
+                    {
+                        type: 'GET',
+                        mode: 'cors', // no-cors, *cors, same-origin
+                        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                        credentials: 'same-origin', // include, *same-origin, omit
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Credentials': 'true',
+                            'authorization': `Bearer ${token.accessToken}`
+                            //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
+                            //'Authorization': 
+                            // 'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        redirect: 'follow', // manual, *follow, error
+                        referrerPolicy: 'no-referrer',
+                    })
+                    .then(response => response.json())
+                    .then(rsp => { loadTable(rsp, table) }).catch((e) => {
+                        console.log(e)
+                    }
+                    )
+            }).catch((e) => {
+                console.log(e)
+            });
+        }
 
         function funcionarMenu(userLoaded) {
             var linkUsuarios = document.getElementById("linkUsuarios");
