@@ -742,7 +742,6 @@
                 .then(function (response) {
                     return response.text()
                 }).then(function (text) {
-                    console.log(text)
                     let objFinal = {
                         "arrayProductos": arrayProductos,
                         "totalVenta": totalVenta.value,
@@ -753,6 +752,7 @@
                         "ordenCompra": window.consecutive
 
                     };
+                    console.log(objFinal)
                     localStorage.setItem("dataReport", JSON.stringify(objFinal));
                     window.open('C:/Users/david/OneDrive/Im%C3%A1genes/mintic/sales_invoice/Reporte.html', '_blank');
                     //window.location.href = "C:/Users/david/OneDrive/Im%C3%A1genes/mintic/sales_invoice/Reporte.html";
