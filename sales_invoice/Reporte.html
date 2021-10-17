@@ -18,7 +18,7 @@
             <input type="checkbox" id="config_tax" />
           </label>
           <label for="config_tax_rate" class="taxrelated">Tasa:
-            <input type="text" id="config_tax_rate" value="16" />%
+            <input type="text" id="config_tax_rate" value="19" />%
           </label>
           <label for="config_note">Nota:
             <input type="checkbox" id="config_note">
@@ -154,9 +154,9 @@
       var datosProductos = document.getElementById("datosProductos");
       var vendedor = document.getElementById("vendedor");
       var fechaHoy = document.getElementById("fechaHoy");
-      let data = Object.values(JSON.parse(dataLoaded))
-      let arrayTemp = data[0];
+      let data = Object.values(JSON.parse(dataLoaded));
       console.log(data)
+      let arrayTemp = data[0];
       let clienteEnvioInfo = "";
       clienteEnvioInfo += `
 
@@ -218,20 +218,23 @@
         <tbody>
           `;
       arrayTemp.forEach(element => {
+        console.log(element[5])
+        console.log((element[1] / 100))
+        console.log(element[5] * (element[1] / 100))
         productosInfo += `
         <tr>
             <td width='5%'><a class="control removeRow" href="#">x</a> <span>${element[0]}</span></td>
             <td width='60%'><span>${element[3]}</span></td>
             <td class="amount"><input type="text" value="${element[6]}" /></td>
-            <td class="rate"><input type="text" value="${element[4]}" /></td>
-            <td class="tax taxrelated">${element[5]}</td>
-            <td class="sum">${element[7]}</td>
+            <td class="rate"><input type="text" value="${element[5]}" /></td>
+            <td class="tax taxrelated">${element[5] * (element[1] / 100)}</td>
+            <td class="sum">${(element[5] * element[6])}</td>
         </tr>`
       });
       productosInfo += `
         </tbody >
       </table >`;
-      factura.value = "TG-"+data[6];
+      factura.value = "TG-" + data[6];
       titularCuenta.innerHTML = data[4].name;
       fechaHoy.value = Date.now();
       clienteEnvio.innerHTML = clienteEnvioInfo;

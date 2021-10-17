@@ -700,7 +700,6 @@
         var totalVenta = document.getElementById("totalVenta");
         var totalIva = document.getElementById("totalIva");
         var totalConIva = document.getElementById("totalConIva");
-        console.log(JSON.parse(userLoaded))
         let arrayProductos = [];
         window.producto1.length < 10 ? window.producto1[6] = (cantidad1.value !== 0 ? cantidad1.value : 0) : null;
         window.producto2.length < 10 ? window.producto2[6] = (cantidad2.value !== 0 ? cantidad2.value : 0) : null;
@@ -711,7 +710,6 @@
         window.producto1.length < 10 ? arrayProductos.push(window.producto1) : null;
         window.producto2.length < 10 ? arrayProductos.push(window.producto2) : null;
         window.producto3.length < 10 ? arrayProductos.push(window.producto3) : null;
-        console.log(arrayProductos)
         let obj = {
             "cedulaClientes": window.clienteFinal,
             "codigoVenta": window.consecutive,
@@ -744,7 +742,6 @@
                 .then(function (response) {
                     return response.text()
                 }).then(function (text) {
-                    console.log(text)
                     let objFinal = {
                         "arrayProductos": arrayProductos,
                         "totalVenta": totalVenta.value,
@@ -755,8 +752,10 @@
                         "ordenCompra": window.consecutive
 
                     };
+                    console.log(objFinal)
                     localStorage.setItem("dataReport", JSON.stringify(objFinal));
-                    window.location.href = "C:/Users/david/OneDrive/Im%C3%A1genes/mintic/sales_invoice/Reporte.html";
+                    window.open('C:/Users/david/OneDrive/Im%C3%A1genes/mintic/sales_invoice/Reporte.html', '_blank');
+                    //window.location.href = "C:/Users/david/OneDrive/Im%C3%A1genes/mintic/sales_invoice/Reporte.html";
                     /*
                     if (text && JSON.parse(text).hasOwnProperty('nitProveedor')) {
                         var modalgenerated = document.getElementById("modal-generated");
