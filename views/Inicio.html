@@ -220,7 +220,7 @@
                     var obj = {};
                     obj["username"] = userName.value;
                     obj["password"] = password.value;
-                    await fetch('http://localhost:8090/api/auth/signin',
+                    await fetch('http://54.145.7.165:8080/Tiendagenerica/api/auth/signin',
                         {
                             method: 'POST',
                             mode: 'cors', // no-cors, *cors, same-origin
@@ -243,7 +243,7 @@
 
                             localStorage.setItem("user", JSON.stringify(text));
                             //var usuarioAlmacenado = localStorage.getItem("user");
-                            window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Principal.html";
+                            window.location.href = "Principal.html";
                         }).catch((error) => {
                             modalgenerated.click();
                             modaltitle.innerHTML = "Error";

@@ -45,7 +45,7 @@
                     <li id="linkClientes" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="Clientes.html">Clientes</a></li>
                     <li id="linkProveedores" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                            href="proveedores.html">Proveedores</a></li>
+                            href="Proveedores.html">Proveedores</a></li>
                     <li id="linkProductos" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="Productos.html">Productos</a></li>
                     <li id="linkVentas" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
@@ -409,7 +409,7 @@
         sessionStorage.removeItem("user");
         sessionStorage.clear();
         localStorage.clear();
-        window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html";
+        window.location.href = "Inicio.html";
     }
 
     var titulo = document.getElementById("title-page");
@@ -452,7 +452,7 @@
                 obj = {
                     "refreshToken": token.refreshToken
                 }
-                fetch("http://localhost:8090/api/auth/refreshtoken",
+                fetch("http://54.145.7.165:8080/Tiendagenerica/api/auth/refreshtoken",
                     {
                         method: 'POST',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -460,7 +460,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -477,14 +477,14 @@
                         if (JSON.parse(text).hasOwnProperty('accessToken')) {
                             resolve(JSON.parse(text));
                         } else {
-                            reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                            reject(window.location.href = "Inicio.html");
                         }
                     }).catch((e) => {
-                        reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                        reject(window.location.href = "Inicio.html");
                     }
                     );
             } catch {
-                reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                reject(window.location.href = "Inicio.html");
             }
         });
     }
@@ -501,7 +501,7 @@
         let count = 0;
         if (id.value.length > 0) {
             await rToken(JSON.parse(userLoaded)).then((token) => {
-                fetch(`http://localhost:8090/mintic/tiendagenerica/api/client/${id.value}`,
+                fetch(`http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/client/${id.value}`,
                     {
                         type: 'GET',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -509,7 +509,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -720,7 +720,7 @@
             "codigoProducto": arrayProductos
         }
         await rToken(JSON.parse(userLoaded)).then((token) => {
-            fetch("http://localhost:8090/mintic/tiendagenerica/api/sale/savesale",
+            fetch("http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/sale/savesale",
                 {
                     method: 'POST',
                     mode: 'cors', // no-cors, *cors, same-origin
@@ -728,7 +728,7 @@
                     credentials: 'same-origin', // include, *same-origin, omit
                     headers: {
                         'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': 'http://localhost:8090',
+                        'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                         'Access-Control-Allow-Credentials': 'true',
                         'authorization': `Bearer ${token.accessToken}`
                         //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -754,8 +754,8 @@
                     };
                     console.log(objFinal)
                     localStorage.setItem("dataReport", JSON.stringify(objFinal));
-                    window.open('C:/Users/david/OneDrive/Im%C3%A1genes/mintic/sales_invoice/Reporte.html', '_blank');
-                    //window.location.href = "C:/Users/david/OneDrive/Im%C3%A1genes/mintic/sales_invoice/Reporte.html";
+                    window.open('../sales_invoice/Reporte.html', '_blank');
+                    //window.location.href = "sales_invoice/Reporte.html";
                     /*
                     if (text && JSON.parse(text).hasOwnProperty('nitProveedor')) {
                         var modalgenerated = document.getElementById("modal-generated");
@@ -791,7 +791,7 @@
     /*
         async function loadConsecutive() {
             return await (function()  {
-                fetch(`http://localhost:8090/mintic/tiendagenerica/api/sale/all`,
+                fetch(`http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/sale/all`,
                     {
                         type: 'GET',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -799,7 +799,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${JSON.parse(userLoaded).accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -844,7 +844,7 @@
         let count = 0;
         if (id.value.length > 0) {
             await rToken(JSON.parse(userLoaded)).then((token) => {
-                fetch(`http://localhost:8090/mintic/tiendagenerica/api/supplier/product/${id.value}`,
+                fetch(`http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/supplier/product/${id.value}`,
                     {
                         type: 'GET',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -852,7 +852,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -924,7 +924,7 @@
         let count = 0;
         if (id.value.length > 0) {
             await rToken(JSON.parse(userLoaded)).then((token) => {
-                fetch(`http://localhost:8090/mintic/tiendagenerica/api/supplier/product/${id.value}`,
+                fetch(`http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/supplier/product/${id.value}`,
                     {
                         type: 'GET',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -932,7 +932,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -1004,7 +1004,7 @@
         let count = 0;
         if (id.value.length > 0) {
             await rToken(JSON.parse(userLoaded)).then((token) => {
-                fetch(`http://localhost:8090/mintic/tiendagenerica/api/supplier/product/${id.value}`,
+                fetch(`http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/supplier/product/${id.value}`,
                     {
                         type: 'GET',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -1012,7 +1012,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`

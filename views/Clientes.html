@@ -45,7 +45,7 @@
                     <li id="linkClientes" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="Clientes.html">Clientes</a></li>
                     <li id="linkProveedores" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                            href="proveedores.html">Proveedores</a></li>
+                            href="Proveedores.html">Proveedores</a></li>
                     <li id="linkProductos" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="Productos.html">Productos</a></li>
                     <li id="linkVentas" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
@@ -308,14 +308,14 @@
     deleteUser.onclick = async function () {
         var id = document.getElementById("cedulaClientes");
         await rToken(JSON.parse(userLoaded)).then((token) => {
-            fetch(`http://localhost:8090/mintic/tiendagenerica/api/client/deleteclient/${id.value}`, {
+            fetch(`http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/client/deleteclient/${id.value}`, {
                 method: 'DELETE',
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: 'same-origin', // include, *same-origin, omit
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': 'http://localhost:8090',
+                    'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                     'Access-Control-Allow-Credentials': 'true',
                     'authorization': `Bearer ${token.accessToken}`
                     //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -363,7 +363,7 @@
         })
         if (flag) {
             await rToken(JSON.parse(userLoaded)).then((token) => {
-                fetch("http://localhost:8090/mintic/tiendagenerica/api/client/editclient",
+                fetch("http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/client/editclient",
                     {
                         method: 'PUT',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -371,7 +371,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -430,7 +430,7 @@
         let count = 0;
         if (id.value.length > 0) {
             await rToken(JSON.parse(userLoaded)).then((token) => {
-                fetch(`http://localhost:8090/mintic/tiendagenerica/api/client/${id.value}`,
+                fetch(`http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/client/${id.value}`,
                     {
                         type: 'GET',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -438,7 +438,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -503,7 +503,7 @@
         })
         if (flag) {
             await rToken(JSON.parse(userLoaded)).then((token) => {
-                fetch("http://localhost:8090/mintic/tiendagenerica/api/client/saveclient",
+                fetch("http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/client/saveclient",
                     {
                         method: 'POST',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -511,7 +511,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -566,7 +566,7 @@
                 obj = {
                     "refreshToken": token.refreshToken
                 }
-                fetch("http://localhost:8090/api/auth/refreshtoken",
+                fetch("http://54.145.7.165:8080/Tiendagenerica/api/auth/refreshtoken",
                     {
                         method: 'POST',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -574,7 +574,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -591,14 +591,14 @@
                         if (JSON.parse(text).hasOwnProperty('accessToken')) {
                             resolve(JSON.parse(text));
                         } else {
-                            reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                            reject(window.location.href = "Inicio.html");
                         }
                     }).catch((e) => {
-                        reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                        reject(window.location.href = "Inicio.html");
                     }
                     );
             } catch {
-                reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                reject(window.location.href = "Inicio.html");
             }
         });
     }
@@ -607,7 +607,7 @@
         sessionStorage.removeItem("user");
         sessionStorage.clear();
         localStorage.clear();
-        window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html";
+        window.location.href = "Inicio.html";
     }
 </script>
 
