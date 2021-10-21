@@ -45,7 +45,7 @@
                     <li id="linkClientes" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="Clientes.html">Clientes</a></li>
                     <li id="linkProveedores" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                            href="proveedores.html">Proveedores</a></li>
+                            href="Proveedores.html">Proveedores</a></li>
                     <li id="linkProductos" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="Productos.html">Productos</a></li>
                     <li id="linkVentas" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
@@ -331,7 +331,7 @@
                 obj = {
                     "refreshToken": token.refreshToken
                 }
-                fetch("http://localhost:8090/api/auth/refreshtoken",
+                fetch("http://54.145.7.165:8080/Tiendagenerica/api/auth/refreshtoken",
                     {
                         method: 'POST',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -339,7 +339,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -356,14 +356,14 @@
                         if (JSON.parse(text).hasOwnProperty('accessToken')) {
                             resolve(JSON.parse(text));
                         } else {
-                            reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                            reject(window.location.href = "Inicio.html");
                         }
                     }).catch((e) => {
-                        reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                        reject(window.location.href = "Inicio.html");
                     }
                     );
             } catch {
-                reject(window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html");
+                reject(window.location.href = "Inicio.html");
             }
         });
     }
@@ -372,7 +372,7 @@
         sessionStorage.removeItem("user");
         sessionStorage.clear();
         localStorage.clear();
-        window.location.href = "C:/Users/david/OneDrive/Imágenes/mintic/views/Inicio.html";
+        window.location.href = "Inicio.html";
     }
 
     loadInfo.onclick = async function () {
@@ -386,7 +386,7 @@
             modaltext.innerHTML = `No ha insertado un archivo válido o no ha insertado un archivo.`;
         } else {
             await rToken(JSON.parse(userLoaded)).then((token) => {
-                fetch("http://localhost:8090/mintic/tiendagenerica/api/supplier/saveproducts",
+                fetch("http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/supplier/saveproducts",
                     {
                         method: 'POST',
                         mode: 'cors', // no-cors, *cors, same-origin
@@ -394,7 +394,7 @@
                         credentials: 'same-origin', // include, *same-origin, omit
                         headers: {
                             'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': 'http://localhost:8090',
+                            'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                             'Access-Control-Allow-Credentials': 'true',
                             'authorization': `Bearer ${token.accessToken}`
                             //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`
@@ -452,7 +452,7 @@
                 let count = 0;
                 if (supplier > 0) {
                     rToken(JSON.parse(userLoaded)).then((token) => {
-                        fetch(`http://localhost:8090/mintic/tiendagenerica/api/supplier/${supplier}`,
+                        fetch(`http://54.145.7.165:8080/Tiendagenerica/mintic/tiendagenerica/api/supplier/${supplier}`,
                             {
                                 type: 'GET',
                                 mode: 'cors', // no-cors, *cors, same-origin
@@ -460,7 +460,7 @@
                                 credentials: 'same-origin', // include, *same-origin, omit
                                 headers: {
                                     'Content-Type': 'application/json',
-                                    'Access-Control-Allow-Origin': 'http://localhost:8090',
+                                    'Access-Control-Allow-Origin': 'http://54.145.7.165:8080',
                                     'Access-Control-Allow-Credentials': 'true',
                                     'authorization': `Bearer ${token.accessToken}`
                                     //'X-Custom-Header': `${JSON.parse(userLoaded)?.accessToken}`

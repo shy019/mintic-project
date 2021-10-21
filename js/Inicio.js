@@ -16,7 +16,7 @@ async function loadInfo() {
         userName.value = '';
         password.value = '';
     });
-    /*await fetch('http://localhost:8090/mintic/tiendagenerica/users')
+    /*await fetch('http://54.145.7.165:8080/mintic/tiendagenerica/users')
         .then(response => response.json())
         .then(rsp => { loadTable(rsp, table) });*/
 }
